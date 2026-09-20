@@ -118,6 +118,12 @@
     .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.075);border-color:var(--line-strong)}
     .btn.primary{background:#f4f6fb;color:#0a0c10;border-color:#f4f6fb}
     .btn.accent{background:rgba(124,140,255,.12);border-color:rgba(124,140,255,.28);color:#eef0ff}
+    .icon{width:15px;height:15px;display:block;flex:0 0 auto;transition:transform .18s ease;pointer-events:none}
+    .external-link:hover .icon-external{transform:translate(2px,-2px)}
+    .directional:hover .icon-arrow{transform:translateX(3px)}
+    html[dir="rtl"] .directional .icon-arrow{transform:rotate(180deg)}
+    html[dir="rtl"] .directional:hover .icon-arrow{transform:translateX(-3px) rotate(180deg)}
+    .founder-thesis .mark .icon{width:16px;height:16px}
     .profile-card{
       aspect-ratio:1;border-radius:34px;border:1px solid var(--line);
       background:linear-gradient(135deg,rgba(124,140,255,.12),rgba(125,243,210,.06));
@@ -187,8 +193,7 @@
     .desc{margin:16px 0 24px;color:var(--muted);line-height:1.68;font-size:14px}
     html[dir="rtl"] .desc{line-height:1.9}
     .link{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-size:14px}
-    .link span{transition:.2s}.link:hover span{transform:translateX(4px)}
-    html[dir="rtl"] .link:hover span{transform:translateX(-4px)}
+    .link:hover .icon-external{transform:translate(2px,-2px)}
     .venture-shell{
       position:relative;overflow:hidden;border:1px solid rgba(124,140,255,.26);
       border-radius:30px;
@@ -387,7 +392,7 @@
         <div class="lead" data-i18n="heroLead">Interested in innovation, entrepreneurship, technology, and building AI-powered products. I enjoy exploring new ideas and turning opportunities into real projects.</div>
 
         <div class="founder-thesis">
-          <div class="mark">↗</div>
+          <div class="mark"><svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div>
             <strong data-i18n="founderThesisLabel">Founder Thesis</strong>
             <p data-i18n="founderThesis">Building practical digital products around real operational problems.</p>
@@ -397,8 +402,8 @@
         <div class="actions">
           <a class="btn primary" href="#projects" data-i18n="viewProjects">View Projects</a>
           <a class="btn accent" href="#venture" data-i18n="exploreSudia">Explore SUDIA Works</a>
-          <a class="btn" href="https://x.com/ifaisal96" target="_blank" rel="noreferrer">X ↗</a>
-          <a class="btn" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a class="btn external-link" href="https://x.com/ifaisal96" target="_blank" rel="noreferrer">X <svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn external-link" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub <svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
 
@@ -452,7 +457,7 @@
               </div>
               <div class="subtitle" data-i18n="laqtaSubtitle">Saudi Deals & Affiliate Platform</div>
               <p class="desc" data-i18n="laqtaDesc">A Saudi digital platform for discovering offers and discounts from multiple online stores in one place. Built around deal discovery, affiliate tracking, and a simple Arabic-first shopping experience.</p>
-              <a class="link" href="https://laqta-offers.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="viewProject">View Project</span> ↗</a>
+              <a class="link external-link" href="https://laqta-offers.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="viewProject">View Project</span> <svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
           </article>
 
@@ -476,7 +481,7 @@
               </div>
               <div class="subtitle" data-i18n="opsSubtitle">Operations Control Platform</div>
               <p class="desc" data-i18n="opsDesc">A digital platform for managing operational incidents, risks, SLA performance, assignments, and workflows from one centralized control center.</p>
-              <a class="link" href="https://nabd-ops-git-feat-control-tower-main-faiisalxll-8727.vercel.app/" target="_blank" rel="noreferrer"><span data-i18n="viewProject">View Project</span> ↗</a>
+              <a class="link external-link" href="https://nabd-ops-git-feat-control-tower-main-faiisalxll-8727.vercel.app/" target="_blank" rel="noreferrer"><span data-i18n="viewProject">View Project</span> <svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
           </article>
         </div>
@@ -500,9 +505,9 @@
               </div>
               <div class="venture-ask" data-i18n="ventureAsk">Open to early-stage investment and strategic partnerships.</div>
               <div class="venture-actions">
-                <button class="btn primary inquiry-trigger" type="button" data-inquiry="investment" data-i18n="investorInquiry">Investor / Partner Inquiry →</button>
+                <button class="btn primary inquiry-trigger directional" type="button" data-inquiry="investment"><span data-i18n="investorInquiry">Investor / Partner Inquiry</span><svg class="icon icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 <button class="btn accent inquiry-trigger" type="button" data-inquiry="brief" data-i18n="privateBrief">Request Private Brief</button>
-                <a class="btn" href="https://wa.me/966502788361?text=Hello%20Faisal%2C%20I%27d%20like%20to%20discuss%20SUDIA%20Works." target="_blank" rel="noreferrer"><span data-i18n="whatsapp">WhatsApp</span> ↗</a>
+                <a class="btn external-link" href="https://wa.me/966502788361?text=Hello%20Faisal%2C%20I%27d%20like%20to%20discuss%20SUDIA%20Works." target="_blank" rel="noreferrer"><span data-i18n="whatsapp">WhatsApp</span><svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               </div>
             </div>
 
@@ -572,10 +577,10 @@
             <h3 data-i18n="findOnline">Find me online</h3>
             <p data-i18n="findOnlineCopy">Connect through X, GitHub, email, or WhatsApp.</p>
             <div class="socials">
-              <a class="social" href="https://x.com/ifaisal96" target="_blank" rel="noreferrer">X · @ifaisal96 ↗</a>
-              <a class="social" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
-              <a class="social" href="mailto:faiisalxll@gmail.com"><span data-i18n="email">Email</span> ↗</a>
-              <a class="social" href="https://wa.me/966502788361" target="_blank" rel="noreferrer"><span data-i18n="whatsapp">WhatsApp</span> ↗</a>
+              <a class="social external-link" href="https://x.com/ifaisal96" target="_blank" rel="noreferrer">X · @ifaisal96 <svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="social external-link" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub <svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="social external-link" href="mailto:faiisalxll@gmail.com"><span data-i18n="email">Email</span><svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="social external-link" href="https://wa.me/966502788361" target="_blank" rel="noreferrer"><span data-i18n="whatsapp">WhatsApp</span><svg class="icon icon-external" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
           </div>
 
@@ -634,7 +639,7 @@
         <label class="sr-only" for="inqMessage" data-i18n="messageLabel">Message</label>
         <textarea id="inqMessage" data-i18n-placeholder="inquiryMessagePlaceholder" placeholder="Optional note"></textarea>
         <div class="modal-actions">
-          <button class="btn primary" type="submit" data-i18n="prepareEmail">Prepare Email →</button>
+          <button class="btn primary directional" type="submit"><span data-i18n="prepareEmail">Prepare Email</span><svg class="icon icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="btn" type="button" data-close-modal data-i18n="cancel">Cancel</button>
         </div>
         <div class="form-note" style="margin-top:12px" data-i18n="privacyNote">No sensitive project details are displayed publicly. Private materials are shared selectively.</div>
@@ -681,7 +686,7 @@
           constructionTech: "Construction Tech",
           saudiArabia: "Saudi Arabia",
           ventureAsk: "Open to early-stage investment and strategic partnerships.",
-          investorInquiry: "Investor / Partner Inquiry →",
+          investorInquiry: "Investor / Partner Inquiry",
           privateBrief: "Request Private Brief",
           whatsapp: "WhatsApp",
           ventureVisualAria: "Abstract construction operating system visualization",
@@ -729,7 +734,7 @@
           interestExpertise: "Construction / Engineering Expertise",
           interestBrief: "Private Brief",
           inquiryMessagePlaceholder: "Optional note",
-          prepareEmail: "Prepare Email →",
+          prepareEmail: "Prepare Email",
           cancel: "Cancel",
           privacyNote: "No sensitive project details are displayed publicly. Private materials are shared selectively."
         },
@@ -769,7 +774,7 @@
           constructionTech: "تقنية الإنشاءات",
           saudiArabia: "السعودية",
           ventureAsk: "المشروع مفتوح للاستثمار المبكر والشراكات الاستراتيجية.",
-          investorInquiry: "استفسار استثماري / شراكة ←",
+          investorInquiry: "استفسار استثماري / شراكة",
           privateBrief: "طلب ملخص خاص",
           whatsapp: "واتساب",
           ventureVisualAria: "تصور تجريدي لنظام تشغيل مشاريع البناء",
@@ -817,7 +822,7 @@
           interestExpertise: "خبرة إنشائية / هندسية",
           interestBrief: "طلب ملخص خاص",
           inquiryMessagePlaceholder: "ملاحظة اختيارية",
-          prepareEmail: "تجهيز البريد ←",
+          prepareEmail: "تجهيز البريد",
           cancel: "إلغاء",
           privacyNote: "لا تُعرض تفاصيل المشروع الحساسة بشكل عام، وتتم مشاركة المواد الخاصة بشكل انتقائي."
         }
