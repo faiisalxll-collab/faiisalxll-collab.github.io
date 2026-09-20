@@ -188,7 +188,7 @@
         <div class="lead">Interested in innovation, entrepreneurship, technology, and building AI-powered products. I enjoy exploring new ideas and turning opportunities into real projects.</div>
         <div class="actions">
           <a class="btn primary" href="#projects">View Projects</a>
-          <a class="btn" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a class="btn" href="https://x.com/ifaisal96" target="_blank" rel="noreferrer">X ↗</a>\n          <a class="btn" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </div>
       <div class="orb" aria-label="Abstract visual"><div class="orb-mark">F</div></div>
@@ -294,7 +294,7 @@
               </div>
               <textarea id="message" placeholder="Message"></textarea>
               <button class="btn primary" type="submit">Let’s connect</button>
-              <div class="form-note" id="formNote">Direct form delivery will be enabled when a contact email is connected.</div>
+              <div class="form-note" id="formNote">Submitting opens your email app with the message prepared for Faisal.</div>
             </form>
           </div>
         </div>
@@ -312,7 +312,16 @@
   <script>
     document.getElementById('contactForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      document.getElementById('formNote').textContent = 'Add the contact email to activate direct message delivery.';
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const subject = encodeURIComponent('Portfolio contact' + (name ? ' — ' + name : ''));
+      const body = encodeURIComponent(
+        (name ? 'Name: ' + name + '\\n' : '') +
+        (email ? 'Email: ' + email + '\\n\\n' : '\\n') +
+        message
+      );
+      window.location.href = 'mailto:faiisalxll@gmail.com?subject=' + subject + '&body=' + body;
     });
   </script>
 </body>
