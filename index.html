@@ -122,14 +122,99 @@
     .desc{margin:16px 0 24px;color:var(--muted);line-height:1.68;font-size:14px}
     .link{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-size:14px}
     .link span{transition:.2s}.link:hover span{transform:translateX(4px)}
-    .building{
-      border:1px solid var(--line);border-radius:26px;padding:42px;
-      background:linear-gradient(135deg,rgba(124,140,255,.09),rgba(255,255,255,.025));
-      display:grid;grid-template-columns:1fr auto;gap:36px;align-items:center;
+    .venture-shell{
+      position:relative;overflow:hidden;
+      border:1px solid rgba(124,140,255,.26);
+      border-radius:30px;
+      background:
+        radial-gradient(650px 360px at 92% 12%,rgba(124,140,255,.17),transparent 62%),
+        radial-gradient(520px 320px at 78% 88%,rgba(125,243,210,.08),transparent 70%),
+        linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.022));
+      box-shadow:0 28px 80px rgba(0,0,0,.28);
     }
-    .building p{color:var(--muted);max-width:710px;font-size:18px;line-height:1.65;margin:10px 0 0}
-    .signal{width:74px;height:74px;border-radius:22px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.04)}
-    .signal:before{content:"";width:18px;height:18px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 9px rgba(124,140,255,.12),0 0 35px rgba(124,140,255,.55)}
+    .venture-shell:before{
+      content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+      background-size:42px 42px;
+      mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.9) 55%,#000 100%);
+    }
+    .venture-grid{
+      position:relative;z-index:1;display:grid;
+      grid-template-columns:1.12fr .88fr;min-height:520px;
+    }
+    .venture-copy{
+      padding:58px 54px;display:flex;flex-direction:column;justify-content:center;
+    }
+    .venture-label{
+      display:inline-flex;align-items:center;gap:10px;width:max-content;
+      font-size:11px;font-weight:750;letter-spacing:.18em;text-transform:uppercase;
+      color:#d7dced;border:1px solid rgba(255,255,255,.11);
+      border-radius:999px;padding:9px 12px;background:rgba(255,255,255,.035);
+    }
+    .venture-label:before{
+      content:"";width:7px;height:7px;border-radius:50%;background:var(--accent2);
+      box-shadow:0 0 16px rgba(125,243,210,.65);
+    }
+    .venture-title{
+      font-size:clamp(42px,6vw,72px);line-height:.98;letter-spacing:-.06em;
+      margin:22px 0 12px;
+    }
+    .venture-subtitle{
+      font-size:18px;color:#eceff5;font-weight:650;letter-spacing:-.02em;
+    }
+    .venture-thesis{
+      max-width:640px;margin:22px 0 0;color:#b5bdc9;line-height:1.72;font-size:16px;
+    }
+    .venture-vision{
+      margin:22px 0 0;padding-left:16px;border-left:2px solid rgba(124,140,255,.65);
+      color:#edf0f6;font-size:16px;line-height:1.65;font-weight:560;
+    }
+    .venture-badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
+    .venture-badge{
+      border:1px solid var(--line);background:rgba(255,255,255,.035);
+      color:#cbd2dd;border-radius:999px;padding:8px 11px;font-size:11px;
+      letter-spacing:.04em;
+    }
+    .venture-ask{
+      margin-top:28px;color:#d9dee8;font-size:13px;
+    }
+    .venture-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .venture-visual{
+      position:relative;min-height:520px;border-left:1px solid rgba(255,255,255,.07);
+      background:linear-gradient(180deg,rgba(7,9,13,.05),rgba(7,9,13,.22));
+      display:grid;place-items:center;padding:34px;
+    }
+    .system-map{
+      position:relative;width:min(100%,400px);aspect-ratio:1;
+    }
+    .system-core{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:150px;height:150px;border-radius:36px;display:grid;place-items:center;text-align:center;
+      background:linear-gradient(145deg,rgba(124,140,255,.20),rgba(125,243,210,.09));
+      border:1px solid rgba(255,255,255,.15);
+      box-shadow:0 24px 70px rgba(0,0,0,.28),0 0 60px rgba(124,140,255,.12);
+    }
+    .system-core strong{display:block;font-size:20px;letter-spacing:-.04em}
+    .system-core span{display:block;margin-top:4px;color:#99a3b2;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+    .node{
+      position:absolute;min-width:112px;padding:12px 14px;border-radius:15px;
+      border:1px solid rgba(255,255,255,.11);background:rgba(8,11,16,.82);
+      backdrop-filter:blur(12px);font-size:11px;color:#d5dae3;
+      box-shadow:0 12px 34px rgba(0,0,0,.22);
+    }
+    .node:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:7px;box-shadow:0 0 12px rgba(124,140,255,.6)}
+    .node.n1{left:1%;top:12%}.node.n2{right:1%;top:18%}.node.n3{left:0;bottom:16%}.node.n4{right:0;bottom:11%}
+    .connector{position:absolute;background:linear-gradient(90deg,rgba(124,140,255,.04),rgba(124,140,255,.45),rgba(125,243,210,.22));height:1px;transform-origin:left center}
+    .c1{left:24%;top:29%;width:29%;transform:rotate(28deg)}
+    .c2{left:52%;top:41%;width:28%;transform:rotate(-31deg)}
+    .c3{left:22%;top:70%;width:31%;transform:rotate(-28deg)}
+    .c4{left:53%;top:61%;width:29%;transform:rotate(30deg)}
+    .venture-foot{
+      position:absolute;right:28px;bottom:22px;color:#727c8c;font-size:10px;
+      letter-spacing:.18em;text-transform:uppercase;
+    }
     .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
     .contact-card,.form-card{border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:30px}
     .contact-card p{color:var(--muted);line-height:1.65}
@@ -151,6 +236,8 @@
       .hero{grid-template-columns:1fr;min-height:auto;padding-top:72px}
       .profile-card{max-width:560px}
       .projects,.contact-grid{grid-template-columns:1fr}
+      .venture-grid{grid-template-columns:1fr}
+      .venture-visual{border-left:0;border-top:1px solid rgba(255,255,255,.07);min-height:390px}
       .section-head{display:block}
       .section-copy{margin-top:14px}
     }
@@ -160,8 +247,11 @@
       h1{font-size:68px}
       section{padding:64px 0}
       .visual{height:220px}
-      .building{padding:28px;grid-template-columns:1fr}
-      .signal{display:none}
+      .venture-copy{padding:34px 26px}
+      .venture-visual{min-height:330px;padding:24px}
+      .system-map{width:min(100%,320px)}
+      .system-core{width:126px;height:126px;border-radius:30px}
+      .node{min-width:92px;padding:10px 11px;font-size:10px}
       .form-row{grid-template-columns:1fr}
       .footer-inner{display:block}
     }
@@ -173,7 +263,7 @@
       <a class="brand" href="#top">FAISAL</a>
       <div class="nav-links">
         <a href="#projects">Projects</a>
-        <a href="#building">Currently Building</a>
+        <a href="#venture">SUDIA Works</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -253,15 +343,43 @@
       </div>
     </section>
 
-    <section id="building">
+    <section id="venture">
       <div class="wrap">
-        <div class="building">
-          <div>
-            <div class="section-kicker">Currently Building</div>
-            <h2>What’s next</h2>
-            <p>Exploring and building AI-powered digital products and new business ideas.</p>
+        <div class="venture-shell">
+          <div class="venture-grid">
+            <div class="venture-copy">
+              <div class="venture-label">Featured Venture</div>
+              <h2 class="venture-title">SUDIA Works</h2>
+              <div class="venture-subtitle">The Intelligent Operating System for Construction Projects</div>
+              <p class="venture-thesis">Building a Saudi construction technology platform designed to bring fragmented project information, decisions, quantities, revisions, and workflows into one intelligent environment.</p>
+              <div class="venture-vision">From fragmented construction workflows to one intelligent control layer — with the aim of reducing costly mistakes, improving project visibility, and supporting better decisions from preparation through execution.</div>
+              <div class="venture-badges">
+                <span class="venture-badge">Pre-Launch</span>
+                <span class="venture-badge">Construction Tech</span>
+                <span class="venture-badge">Saudi Arabia</span>
+              </div>
+              <div class="venture-ask">Open to early-stage investment and strategic partnerships.</div>
+              <div class="venture-actions">
+                <a class="btn primary" href="mailto:faiisalxll@gmail.com?subject=SUDIA%20Works%20%E2%80%94%20Investment%20%2F%20Strategic%20Partnership">Discuss SUDIA Works →</a>
+                <a class="btn" href="https://wa.me/966502788361?text=Hello%20Faisal%2C%20I%27d%20like%20to%20discuss%20SUDIA%20Works." target="_blank" rel="noreferrer">WhatsApp ↗</a>
+              </div>
+            </div>
+
+            <div class="venture-visual" aria-label="Abstract construction operating system visualization">
+              <div class="system-map">
+                <div class="connector c1"></div>
+                <div class="connector c2"></div>
+                <div class="connector c3"></div>
+                <div class="connector c4"></div>
+                <div class="node n1">Project Information</div>
+                <div class="node n2">Decisions & Revisions</div>
+                <div class="node n3">Quantities & Visibility</div>
+                <div class="node n4">Execution Workflows</div>
+                <div class="system-core"><div><strong>SUDIA Works</strong><span>Control Layer</span></div></div>
+              </div>
+              <div class="venture-foot">Built for the future of construction</div>
+            </div>
           </div>
-          <div class="signal" aria-hidden="true"></div>
         </div>
       </div>
     </section>
