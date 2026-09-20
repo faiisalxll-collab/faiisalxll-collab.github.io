@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07090d" />
+  <meta name="description" content="Faisal — interested in innovation, entrepreneurship, technology, and building AI-powered products." />
+  <meta property="og:title" content="Faisal — Products & Technology" />
+  <meta property="og:description" content="Exploring ideas and turning opportunities into real digital products." />
+  <meta property="og:type" content="website" />
+  <title>Faisal — Products & Technology</title>
+  <style>
+    :root{
+      --bg:#07090d;
+      --panel:rgba(255,255,255,.045);
+      --panel-strong:rgba(255,255,255,.07);
+      --line:rgba(255,255,255,.10);
+      --text:#f6f7fb;
+      --muted:#a9b0bd;
+      --accent:#7c8cff;
+      --accent2:#7df3d2;
+      --shadow:0 24px 70px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 8% -10%, rgba(124,140,255,.17), transparent 60%),
+        radial-gradient(800px 560px at 92% 10%, rgba(125,243,210,.09), transparent 62%),
+        var(--bg);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+    .nav{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(18px);
+      background:rgba(7,9,13,.72);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:750;letter-spacing:-.03em;font-size:19px}
+    .nav-links{display:flex;gap:26px;color:#c4cad4;font-size:14px}
+    .nav-links a:hover{color:#fff}
+    .hero{
+      min-height:78vh;display:grid;grid-template-columns:1.15fr .85fr;
+      gap:48px;align-items:center;padding:90px 0 70px;
+    }
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#cfd4df;font-size:13px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 20px rgba(125,243,210,.7)}
+    h1{font-size:clamp(62px,10vw,118px);line-height:.88;margin:18px 0 26px;letter-spacing:-.075em}
+    .lead{max-width:690px;color:#b8bfca;font-size:clamp(18px,2.4vw,24px);line-height:1.55;letter-spacing:-.02em}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      min-height:46px;padding:0 18px;border-radius:13px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);font-size:14px;font-weight:650;
+      transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.075)}
+    .btn.primary{background:#f4f6fb;color:#0a0c10;border-color:#f4f6fb}
+    .orb{
+      aspect-ratio:1;border-radius:34px;border:1px solid var(--line);
+      background:
+        linear-gradient(135deg,rgba(124,140,255,.20),rgba(125,243,210,.08)),
+        repeating-linear-gradient(0deg,transparent 0 31px,rgba(255,255,255,.045) 32px),
+        repeating-linear-gradient(90deg,transparent 0 31px,rgba(255,255,255,.045) 32px);
+      box-shadow:var(--shadow);position:relative;overflow:hidden;
+    }
+    .orb:before,.orb:after{content:"";position:absolute;border-radius:999px;filter:blur(4px)}
+    .orb:before{width:56%;height:56%;left:12%;top:10%;background:rgba(124,140,255,.28)}
+    .orb:after{width:45%;height:45%;right:7%;bottom:8%;background:rgba(125,243,210,.16)}
+    .orb-mark{
+      position:absolute;inset:0;display:grid;place-items:center;
+      font-size:clamp(70px,12vw,150px);font-weight:800;letter-spacing:-.08em;
+      text-shadow:0 15px 60px rgba(0,0,0,.45);
+    }
+    section{padding:86px 0}
+    .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:28px}
+    .section-kicker{color:#8d96a5;font-size:12px;text-transform:uppercase;letter-spacing:.17em}
+    h2{font-size:clamp(34px,5vw,56px);letter-spacing:-.055em;margin:9px 0 0}
+    .section-copy{max-width:520px;color:var(--muted);line-height:1.65}
+    .projects{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .card{
+      border:1px solid var(--line);border-radius:24px;background:var(--panel);
+      overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.16);
+      transition:.22s ease;
+    }
+    .card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.18);background:var(--panel-strong)}
+    .visual{height:270px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .visual.laqta{
+      background:
+        radial-gradient(400px 220px at 15% 15%,rgba(124,140,255,.26),transparent 60%),
+        linear-gradient(145deg,#10131b,#090b10 70%);
+    }
+    .visual.sudia{
+      background:
+        radial-gradient(360px 240px at 80% 20%,rgba(125,243,210,.14),transparent 60%),
+        linear-gradient(145deg,#0b1011,#090b10);
+    }
+    .visual-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:34px 34px}
+    .laqta-logo{position:absolute;left:28px;bottom:22px;font-size:42px;font-weight:800;letter-spacing:-.055em}
+    .chips{position:absolute;right:24px;top:26px;display:grid;gap:9px}
+    .chip{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.055);font-size:12px;color:#d6dbe4}
+    .ops-ui{position:absolute;inset:28px;display:grid;grid-template-columns:.7fr 1.3fr;gap:14px}
+    .rail,.screen{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035)}
+    .rail{padding:16px;display:grid;gap:10px;align-content:start}
+    .line{height:8px;border-radius:8px;background:rgba(255,255,255,.10)}
+    .line.short{width:60%}.line.mid{width:78%}
+    .screen{padding:17px;display:grid;gap:14px}
+    .metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .metric{height:52px;border-radius:12px;background:rgba(125,243,210,.07);border:1px solid rgba(125,243,210,.10)}
+    .chart{position:relative;min-height:104px;border-radius:14px;background:linear-gradient(180deg,rgba(124,140,255,.10),transparent);overflow:hidden}
+    .chart:after{content:"";position:absolute;left:10%;right:10%;bottom:28%;height:2px;background:linear-gradient(90deg,transparent,#7c8cff 20%,#7df3d2 70%,transparent);transform:skewY(-8deg);box-shadow:0 0 18px rgba(124,140,255,.35)}
+    .card-body{padding:26px}
+    .card-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .status{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#c7ced8;border:1px solid var(--line);border-radius:999px;padding:7px 10px}
+    h3{font-size:27px;letter-spacing:-.04em;margin:0}
+    .subtitle{margin-top:9px;color:#e5e8ee;font-size:14px}
+    .desc{margin:16px 0 24px;color:var(--muted);line-height:1.68;font-size:14px}
+    .link{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-size:14px}
+    .link span{transition:.2s}.link:hover span{transform:translateX(4px)}
+    .building{
+      border:1px solid var(--line);border-radius:26px;padding:42px;
+      background:linear-gradient(135deg,rgba(124,140,255,.09),rgba(255,255,255,.025));
+      display:grid;grid-template-columns:1fr auto;gap:36px;align-items:center;
+    }
+    .building p{color:var(--muted);max-width:710px;font-size:18px;line-height:1.65;margin:10px 0 0}
+    .signal{width:74px;height:74px;border-radius:22px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.04)}
+    .signal:before{content:"";width:18px;height:18px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 9px rgba(124,140,255,.12),0 0 35px rgba(124,140,255,.55)}
+    .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
+    .contact-card,.form-card{border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:30px}
+    .contact-card p{color:var(--muted);line-height:1.65}
+    .socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+    .social{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:14px}
+    .form{display:grid;gap:12px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    input,textarea{
+      width:100%;border:1px solid var(--line);background:rgba(255,255,255,.03);
+      border-radius:13px;color:#fff;padding:14px 15px;font:inherit;outline:none;
+    }
+    input:focus,textarea:focus{border-color:rgba(124,140,255,.75);box-shadow:0 0 0 3px rgba(124,140,255,.10)}
+    textarea{min-height:130px;resize:vertical}
+    .form-note{font-size:12px;color:#7f8793;line-height:1.5}
+    footer{padding:32px 0 48px;color:#858d99;font-size:13px}
+    .footer-inner{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:20px}
+    @media(max-width:820px){
+      .nav-links{display:none}
+      .hero{grid-template-columns:1fr;min-height:auto;padding-top:72px}
+      .orb{max-width:560px}
+      .projects,.contact-grid{grid-template-columns:1fr}
+      .section-head{display:block}
+      .section-copy{margin-top:14px}
+    }
+    @media(max-width:560px){
+      .wrap{width:min(100% - 24px,1120px)}
+      .hero{padding:58px 0 36px;gap:28px}
+      h1{font-size:68px}
+      section{padding:64px 0}
+      .visual{height:220px}
+      .building{padding:28px;grid-template-columns:1fr}
+      .signal{display:none}
+      .form-row{grid-template-columns:1fr}
+      .footer-inner{display:block}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">FAISAL</a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#building">Currently Building</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Innovation · Products · Technology</div>
+        <h1>Faisal</h1>
+        <div class="lead">Interested in innovation, entrepreneurship, technology, and building AI-powered products. I enjoy exploring new ideas and turning opportunities into real projects.</div>
+        <div class="actions">
+          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="orb" aria-label="Abstract visual"><div class="orb-mark">F</div></div>
+    </div>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Selected work</div>
+            <h2>Projects</h2>
+          </div>
+          <div class="section-copy">A focused selection of digital products built around practical problems, clear workflows, and simple user experiences.</div>
+        </div>
+
+        <div class="projects">
+          <article class="card">
+            <div class="visual laqta">
+              <div class="visual-grid"></div>
+              <div class="chips">
+                <span class="chip">Deals</span>
+                <span class="chip">Affiliate</span>
+                <span class="chip">Arabic-first</span>
+              </div>
+              <div class="laqta-logo">LAQTA · لقطة</div>
+            </div>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>LAQTA — لقطة</h3>
+                <span class="status">Live Beta</span>
+              </div>
+              <div class="subtitle">Saudi Deals & Affiliate Platform</div>
+              <p class="desc">A Saudi digital platform for discovering offers and discounts from multiple online stores in one place. Built around deal discovery, affiliate tracking, and a simple Arabic-first shopping experience.</p>
+              <a class="link" href="https://laqta-offers.vercel.app" target="_blank" rel="noreferrer">View Project <span>→</span></a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="visual sudia">
+              <div class="visual-grid"></div>
+              <div class="ops-ui">
+                <div class="rail">
+                  <div class="line mid"></div><div class="line"></div><div class="line short"></div><div class="line mid"></div><div class="line"></div>
+                </div>
+                <div class="screen">
+                  <div class="metric-row"><div class="metric"></div><div class="metric"></div><div class="metric"></div></div>
+                  <div class="chart"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-top">
+                <h3>SUDIA Ops</h3>
+                <span class="status">Prototype / Demo</span>
+              </div>
+              <div class="subtitle">Operations Control Platform</div>
+              <p class="desc">A digital platform for managing operational incidents, risks, SLA performance, assignments, and workflows from one centralized control center.</p>
+              <a class="link" href="https://nabd-ops-git-feat-control-tower-main-faiisalxll-8727.vercel.app/" target="_blank" rel="noreferrer">View Project <span>→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="building">
+      <div class="wrap">
+        <div class="building">
+          <div>
+            <div class="section-kicker">Currently Building</div>
+            <h2>What’s next</h2>
+            <p>Exploring and building AI-powered digital products and new business ideas.</p>
+          </div>
+          <div class="signal" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Contact</div>
+            <h2>Let’s connect</h2>
+          </div>
+          <div class="section-copy">Interested in products, technology, entrepreneurship, and conversations around new ideas.</div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Find me online</h3>
+            <p>The GitHub profile is active now. X can be connected as soon as the exact profile URL is added.</p>
+            <div class="socials">
+              <a class="social" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <span class="social" aria-disabled="true">X · link pending</span>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <form class="form" id="contactForm">
+              <div class="form-row">
+                <input id="name" type="text" placeholder="Name" autocomplete="name" />
+                <input id="email" type="email" placeholder="Email" autocomplete="email" />
+              </div>
+              <textarea id="message" placeholder="Message"></textarea>
+              <button class="btn primary" type="submit">Let’s connect</button>
+              <div class="form-note" id="formNote">Direct form delivery will be enabled when a contact email is connected.</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Faisal. All rights reserved.</span>
+      <span>Built as a lightweight static site.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('formNote').textContent = 'Add the contact email to activate direct message delivery.';
+    });
+  </script>
+</body>
+</html>
