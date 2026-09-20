@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,6 +9,9 @@
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
   <link rel="canonical" href="https://faiisalxll-collab.github.io/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="https://static.wixstatic.com/media/68bbbd_194a39bceca345a3ac938a7e68c12ddb~mv2.png" fetchpriority="high" />
   <link rel="icon" type="image/png" sizes="512x512" href="https://static.wixstatic.com/media/68bbbd_5e7fc7a80b1a4d659598b44eeec40cb6~mv2.png" />
   <link rel="apple-touch-icon" href="https://static.wixstatic.com/media/68bbbd_5e7fc7a80b1a4d659598b44eeec40cb6~mv2.png" />
@@ -31,12 +34,14 @@
   <meta name="twitter:creator" content="@ifaisal96" />
 
   <title>Faisal — Building Digital Products</title>
+
   <style>
     :root{
       --bg:#07090d;
       --panel:rgba(255,255,255,.045);
-      --panel-strong:rgba(255,255,255,.07);
+      --panel-strong:rgba(255,255,255,.072);
       --line:rgba(255,255,255,.10);
+      --line-strong:rgba(255,255,255,.16);
       --text:#f6f7fb;
       --muted:#a9b0bd;
       --accent:#7c8cff;
@@ -46,44 +51,73 @@
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
-      margin:0;
-      color:var(--text);
+      margin:0;color:var(--text);
       background:
-        radial-gradient(900px 500px at 8% -10%, rgba(124,140,255,.17), transparent 60%),
-        radial-gradient(800px 560px at 92% 10%, rgba(125,243,210,.09), transparent 62%),
+        radial-gradient(900px 500px at 8% -10%,rgba(124,140,255,.17),transparent 60%),
+        radial-gradient(800px 560px at 92% 10%,rgba(125,243,210,.09),transparent 62%),
         var(--bg);
       font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      -webkit-font-smoothing:antialiased;
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    }
+    html[dir="rtl"] body{
+      font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;
+      letter-spacing:0;
     }
     a{color:inherit;text-decoration:none}
+    button,input,textarea,select{font:inherit}
+    button{color:inherit}
     .wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+    .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .nav{
-      position:sticky;top:0;z-index:20;
-      backdrop-filter:blur(18px);
-      background:rgba(7,9,13,.72);
-      border-bottom:1px solid rgba(255,255,255,.06);
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+      background:rgba(7,9,13,.76);border-bottom:1px solid rgba(255,255,255,.06);
     }
-    .nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
-    .brand{font-weight:750;letter-spacing:-.03em;font-size:19px}
-    .nav-links{display:flex;gap:26px;color:#c4cad4;font-size:14px}
+    .nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{font-weight:760;letter-spacing:-.03em;font-size:19px;direction:ltr}
+    .nav-right{display:flex;align-items:center;gap:20px}
+    .nav-links{display:flex;gap:24px;color:#c4cad4;font-size:14px}
     .nav-links a:hover{color:#fff}
+    .lang-switch{
+      display:flex;align-items:center;padding:3px;border:1px solid var(--line);
+      border-radius:11px;background:rgba(255,255,255,.035);
+    }
+    .lang-btn{
+      border:0;background:transparent;cursor:pointer;padding:7px 9px;border-radius:8px;
+      color:#929aa8;font-size:11px;font-weight:700;transition:.18s ease;
+    }
+    .lang-btn.active{background:#f4f6fb;color:#0a0c10}
     .hero{
-      min-height:78vh;display:grid;grid-template-columns:1.15fr .85fr;
-      gap:48px;align-items:center;padding:90px 0 70px;
+      min-height:74vh;display:grid;grid-template-columns:1.15fr .85fr;
+      gap:48px;align-items:center;padding:86px 0 48px;
     }
     .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#cfd4df;font-size:13px}
     .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 20px rgba(125,243,210,.7)}
     h1{font-size:clamp(62px,10vw,118px);line-height:.88;margin:18px 0 26px;letter-spacing:-.075em}
+    html[dir="rtl"] h1{letter-spacing:-.035em}
     .lead{max-width:690px;color:#b8bfca;font-size:clamp(18px,2.4vw,24px);line-height:1.55;letter-spacing:-.02em}
-    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    html[dir="rtl"] .lead{letter-spacing:0;line-height:1.8}
+    .founder-thesis{
+      max-width:680px;margin-top:24px;padding:15px 17px;border:1px solid var(--line);
+      border-radius:16px;background:rgba(255,255,255,.028);display:flex;gap:14px;align-items:flex-start;
+    }
+    .founder-thesis .mark{
+      flex:0 0 auto;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;
+      background:rgba(124,140,255,.10);border:1px solid rgba(124,140,255,.18);
+    }
+    .founder-thesis strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:#8993a4;margin-bottom:5px}
+    html[dir="rtl"] .founder-thesis strong{letter-spacing:0}
+    .founder-thesis p{margin:0;color:#e7eaf0;font-size:14px;line-height:1.55}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:9px;
       min-height:46px;padding:0 18px;border-radius:13px;border:1px solid var(--line);
       background:rgba(255,255,255,.04);font-size:14px;font-weight:650;
-      transition:.2s ease;
+      transition:.2s ease;cursor:pointer;
     }
-    .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.075)}
+    .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.075);border-color:var(--line-strong)}
     .btn.primary{background:#f4f6fb;color:#0a0c10;border-color:#f4f6fb}
+    .btn.accent{background:rgba(124,140,255,.12);border-color:rgba(124,140,255,.28);color:#eef0ff}
     .profile-card{
       aspect-ratio:1;border-radius:34px;border:1px solid var(--line);
       background:linear-gradient(135deg,rgba(124,140,255,.12),rgba(125,243,210,.06));
@@ -94,20 +128,28 @@
       border:1px solid rgba(255,255,255,.12);pointer-events:none;
       box-shadow:inset 0 0 50px rgba(0,0,0,.08);
     }
-    .profile-photo{
-      width:100%;height:100%;object-fit:cover;object-position:center 38%;
-      display:block;border-radius:26px;image-rendering:auto;
+    .profile-photo{width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;border-radius:26px;image-rendering:auto}
+    .status-strip{
+      display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);
+      border-radius:18px;overflow:hidden;background:rgba(255,255,255,.025);margin:0 auto 18px;
     }
-    section{padding:86px 0}
+    .status-item{padding:17px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .status-item+.status-item{border-left:1px solid var(--line)}
+    html[dir="rtl"] .status-item+.status-item{border-left:0;border-right:1px solid var(--line)}
+    .status-name{font-size:13px;font-weight:700;direction:ltr}
+    .status-state{font-size:11px;color:#aeb6c3;border:1px solid var(--line);border-radius:999px;padding:6px 9px;white-space:nowrap}
+    section{padding:82px 0}
     .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:28px}
     .section-kicker{color:#8d96a5;font-size:12px;text-transform:uppercase;letter-spacing:.17em}
+    html[dir="rtl"] .section-kicker{letter-spacing:0}
     h2{font-size:clamp(34px,5vw,56px);letter-spacing:-.055em;margin:9px 0 0}
-    .section-copy{max-width:520px;color:var(--muted);line-height:1.65}
+    html[dir="rtl"] h2{letter-spacing:-.02em}
+    .section-copy{max-width:520px;color:var(--muted);line-height:1.7}
+    html[dir="rtl"] .section-copy{line-height:1.9}
     .projects{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .card{
       border:1px solid var(--line);border-radius:24px;background:var(--panel);
-      overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.16);
-      transition:.22s ease;
+      overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.16);transition:.22s ease;
     }
     .card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.18);background:var(--panel-strong)}
     .visual{height:270px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
@@ -122,10 +164,10 @@
         linear-gradient(145deg,#0b1011,#090b10);
     }
     .visual-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:34px 34px}
-    .laqta-logo{position:absolute;left:28px;bottom:22px;font-size:42px;font-weight:800;letter-spacing:-.055em}
+    .laqta-logo{position:absolute;left:28px;bottom:22px;font-size:42px;font-weight:800;letter-spacing:-.055em;direction:ltr}
     .chips{position:absolute;right:24px;top:26px;display:grid;gap:9px}
     .chip{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.055);font-size:12px;color:#d6dbe4}
-    .ops-ui{position:absolute;inset:28px;display:grid;grid-template-columns:.7fr 1.3fr;gap:14px}
+    .ops-ui{position:absolute;inset:28px;display:grid;grid-template-columns:.7fr 1.3fr;gap:14px;direction:ltr}
     .rail,.screen{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035)}
     .rail{padding:16px;display:grid;gap:10px;align-content:start}
     .line{height:8px;border-radius:8px;background:rgba(255,255,255,.10)}
@@ -138,14 +180,17 @@
     .card-body{padding:26px}
     .card-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .status{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#c7ced8;border:1px solid var(--line);border-radius:999px;padding:7px 10px}
+    html[dir="rtl"] .status{letter-spacing:0}
     h3{font-size:27px;letter-spacing:-.04em;margin:0}
+    html[dir="rtl"] h3{letter-spacing:-.015em}
     .subtitle{margin-top:9px;color:#e5e8ee;font-size:14px}
     .desc{margin:16px 0 24px;color:var(--muted);line-height:1.68;font-size:14px}
+    html[dir="rtl"] .desc{line-height:1.9}
     .link{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-size:14px}
     .link span{transition:.2s}.link:hover span{transform:translateX(4px)}
+    html[dir="rtl"] .link:hover span{transform:translateX(-4px)}
     .venture-shell{
-      position:relative;overflow:hidden;
-      border:1px solid rgba(124,140,255,.26);
+      position:relative;overflow:hidden;border:1px solid rgba(124,140,255,.26);
       border-radius:30px;
       background:
         radial-gradient(650px 360px at 92% 12%,rgba(124,140,255,.17),transparent 62%),
@@ -155,139 +200,157 @@
     }
     .venture-shell:before{
       content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
-      background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-      background-size:42px 42px;
-      mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.9) 55%,#000 100%);
+      background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+      background-size:42px 42px;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.9) 55%,#000 100%);
     }
-    .venture-grid{
-      position:relative;z-index:1;display:grid;
-      grid-template-columns:1.12fr .88fr;min-height:520px;
-    }
-    .venture-copy{
-      padding:58px 54px;display:flex;flex-direction:column;justify-content:center;
-    }
+    .venture-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.12fr .88fr;min-height:520px}
+    .venture-copy{padding:58px 54px;display:flex;flex-direction:column;justify-content:center}
     .venture-label{
-      display:inline-flex;align-items:center;gap:10px;width:max-content;
-      font-size:11px;font-weight:750;letter-spacing:.18em;text-transform:uppercase;
-      color:#d7dced;border:1px solid rgba(255,255,255,.11);
+      display:inline-flex;align-items:center;gap:10px;width:max-content;font-size:11px;font-weight:750;
+      letter-spacing:.18em;text-transform:uppercase;color:#d7dced;border:1px solid rgba(255,255,255,.11);
       border-radius:999px;padding:9px 12px;background:rgba(255,255,255,.035);
     }
-    .venture-label:before{
-      content:"";width:7px;height:7px;border-radius:50%;background:var(--accent2);
-      box-shadow:0 0 16px rgba(125,243,210,.65);
-    }
-    .venture-title{
-      font-size:clamp(42px,6vw,72px);line-height:.98;letter-spacing:-.06em;
-      margin:22px 0 12px;
-    }
-    .venture-subtitle{
-      font-size:18px;color:#eceff5;font-weight:650;letter-spacing:-.02em;
-    }
-    .venture-thesis{
-      max-width:640px;margin:22px 0 0;color:#b5bdc9;line-height:1.72;font-size:16px;
-    }
-    .venture-vision{
-      margin:22px 0 0;padding-left:16px;border-left:2px solid rgba(124,140,255,.65);
-      color:#edf0f6;font-size:16px;line-height:1.65;font-weight:560;
-    }
+    html[dir="rtl"] .venture-label{letter-spacing:0}
+    .venture-label:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 16px rgba(125,243,210,.65)}
+    .venture-title{font-size:clamp(42px,6vw,72px);line-height:.98;letter-spacing:-.06em;margin:22px 0 12px;direction:ltr;text-align:start}
+    .venture-subtitle{font-size:18px;color:#eceff5;font-weight:650;letter-spacing:-.02em}
+    html[dir="rtl"] .venture-subtitle{letter-spacing:0}
+    .venture-thesis{max-width:640px;margin:22px 0 0;color:#b5bdc9;line-height:1.72;font-size:16px}
+    html[dir="rtl"] .venture-thesis{line-height:1.95}
+    .venture-vision{margin:22px 0 0;padding-left:16px;border-left:2px solid rgba(124,140,255,.65);color:#edf0f6;font-size:16px;line-height:1.65;font-weight:560}
+    html[dir="rtl"] .venture-vision{padding-left:0;padding-right:16px;border-left:0;border-right:2px solid rgba(124,140,255,.65);line-height:1.9}
     .venture-badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
-    .venture-badge{
-      border:1px solid var(--line);background:rgba(255,255,255,.035);
-      color:#cbd2dd;border-radius:999px;padding:8px 11px;font-size:11px;
-      letter-spacing:.04em;
-    }
-    .venture-ask{
-      margin-top:28px;color:#d9dee8;font-size:13px;
-    }
+    .venture-badge{border:1px solid var(--line);background:rgba(255,255,255,.035);color:#cbd2dd;border-radius:999px;padding:8px 11px;font-size:11px;letter-spacing:.04em}
+    html[dir="rtl"] .venture-badge{letter-spacing:0}
+    .venture-ask{margin-top:28px;color:#d9dee8;font-size:13px;line-height:1.7}
     .venture-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
     .venture-visual{
       position:relative;min-height:520px;border-left:1px solid rgba(255,255,255,.07);
-      background:linear-gradient(180deg,rgba(7,9,13,.05),rgba(7,9,13,.22));
-      display:grid;place-items:center;padding:34px;
+      background:linear-gradient(180deg,rgba(7,9,13,.05),rgba(7,9,13,.22));display:grid;place-items:center;padding:34px;
     }
-    .system-map{
-      position:relative;width:min(100%,400px);aspect-ratio:1;
-    }
+    html[dir="rtl"] .venture-visual{border-left:0;border-right:1px solid rgba(255,255,255,.07)}
+    .system-map{position:relative;width:min(100%,400px);aspect-ratio:1}
     .system-core{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:150px;height:150px;border-radius:36px;display:grid;place-items:center;text-align:center;
-      background:linear-gradient(145deg,rgba(124,140,255,.20),rgba(125,243,210,.09));
-      border:1px solid rgba(255,255,255,.15);
-      box-shadow:0 24px 70px rgba(0,0,0,.28),0 0 60px rgba(124,140,255,.12);
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:36px;
+      display:grid;place-items:center;text-align:center;background:linear-gradient(145deg,rgba(124,140,255,.20),rgba(125,243,210,.09));
+      border:1px solid rgba(255,255,255,.15);box-shadow:0 24px 70px rgba(0,0,0,.28),0 0 60px rgba(124,140,255,.12);
     }
-    .system-core strong{display:block;font-size:20px;letter-spacing:-.04em}
-    .system-core span{display:block;margin-top:4px;color:#99a3b2;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+    .system-core strong{display:block;font-size:20px;letter-spacing:-.04em;direction:ltr}
+    .system-core span{display:block;margin-top:4px;color:#99a3b2;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+    html[dir="rtl"] .system-core span{letter-spacing:0}
     .node{
-      position:absolute;min-width:112px;padding:12px 14px;border-radius:15px;
-      border:1px solid rgba(255,255,255,.11);background:rgba(8,11,16,.82);
-      backdrop-filter:blur(12px);font-size:11px;color:#d5dae3;
-      box-shadow:0 12px 34px rgba(0,0,0,.22);
+      position:absolute;min-width:112px;padding:12px 14px;border-radius:15px;border:1px solid rgba(255,255,255,.11);
+      background:rgba(8,11,16,.82);backdrop-filter:blur(12px);font-size:11px;color:#d5dae3;box-shadow:0 12px 34px rgba(0,0,0,.22);
     }
     .node:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:7px;box-shadow:0 0 12px rgba(124,140,255,.6)}
+    html[dir="rtl"] .node:before{margin-right:0;margin-left:7px}
     .node.n1{left:1%;top:12%}.node.n2{right:1%;top:18%}.node.n3{left:0;bottom:16%}.node.n4{right:0;bottom:11%}
     .connector{position:absolute;background:linear-gradient(90deg,rgba(124,140,255,.04),rgba(124,140,255,.45),rgba(125,243,210,.22));height:1px;transform-origin:left center}
-    .c1{left:24%;top:29%;width:29%;transform:rotate(28deg)}
-    .c2{left:52%;top:41%;width:28%;transform:rotate(-31deg)}
-    .c3{left:22%;top:70%;width:31%;transform:rotate(-28deg)}
-    .c4{left:53%;top:61%;width:29%;transform:rotate(30deg)}
-    .venture-foot{
-      position:absolute;right:28px;bottom:22px;color:#727c8c;font-size:10px;
-      letter-spacing:.18em;text-transform:uppercase;
+    .c1{left:24%;top:29%;width:29%;transform:rotate(28deg)}.c2{left:52%;top:41%;width:28%;transform:rotate(-31deg)}
+    .c3{left:22%;top:70%;width:31%;transform:rotate(-28deg)}.c4{left:53%;top:61%;width:29%;transform:rotate(30deg)}
+    .venture-foot{position:absolute;right:28px;bottom:22px;color:#727c8c;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+    html[dir="rtl"] .venture-foot{right:auto;left:28px;letter-spacing:0}
+    .looking-shell{
+      border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.042),rgba(255,255,255,.018));
+      padding:34px;
     }
+    .looking-top{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:24px}
+    .looking-copy{max-width:560px;color:var(--muted);line-height:1.7}
+    html[dir="rtl"] .looking-copy{line-height:1.9}
+    .looking-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .looking-card{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025);padding:22px;min-height:160px}
+    .looking-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(124,140,255,.09);border:1px solid rgba(124,140,255,.16);margin-bottom:18px}
+    .looking-card h3{font-size:18px;margin-bottom:9px}
+    .looking-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+    html[dir="rtl"] .looking-card p{line-height:1.9}
     .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
     .contact-card,.form-card{border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:30px}
-    .contact-card p{color:var(--muted);line-height:1.65}
+    .contact-card p{color:var(--muted);line-height:1.7}
     .socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
-    .social{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:14px}
+    .social{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:14px;transition:.18s ease}
+    .social:hover{background:rgba(255,255,255,.06);border-color:var(--line-strong)}
     .form{display:grid;gap:12px}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    input,textarea{
-      width:100%;border:1px solid var(--line);background:rgba(255,255,255,.03);
-      border-radius:13px;color:#fff;padding:14px 15px;font:inherit;outline:none;
+    input,textarea,select{
+      width:100%;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:13px;
+      color:#fff;padding:14px 15px;outline:none;
     }
-    input:focus,textarea:focus{border-color:rgba(124,140,255,.75);box-shadow:0 0 0 3px rgba(124,140,255,.10)}
+    select{appearance:none}
+    input::placeholder,textarea::placeholder{color:#6f7886}
+    input:focus,textarea:focus,select:focus{border-color:rgba(124,140,255,.75);box-shadow:0 0 0 3px rgba(124,140,255,.10)}
     textarea{min-height:130px;resize:vertical}
+    input[type="email"]{direction:ltr;text-align:left}
     .form-note{font-size:12px;color:#7f8793;line-height:1.5}
-    footer{padding:32px 0 48px;color:#858d99;font-size:13px}
+    footer{padding:30px 0 48px;color:#858d99;font-size:13px}
     .footer-inner{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:20px}
+    .modal[hidden]{display:none}
+    .modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px}
+    .modal-backdrop{position:absolute;inset:0;background:rgba(2,4,7,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+    .modal-panel{
+      position:relative;z-index:1;width:min(620px,100%);max-height:min(760px,calc(100vh - 36px));overflow:auto;
+      border:1px solid var(--line-strong);border-radius:26px;background:#0b0e14;box-shadow:0 30px 100px rgba(0,0,0,.55);padding:30px;
+    }
+    .modal-close{
+      position:absolute;top:18px;right:18px;width:36px;height:36px;border:1px solid var(--line);border-radius:11px;
+      background:rgba(255,255,255,.035);cursor:pointer;font-size:20px;line-height:1;
+    }
+    html[dir="rtl"] .modal-close{right:auto;left:18px}
+    .modal-panel h2{font-size:34px;margin:8px 42px 8px 0}
+    html[dir="rtl"] .modal-panel h2{margin:8px 0 8px 42px}
+    .modal-intro{margin:0 0 22px;color:var(--muted);line-height:1.7;font-size:14px}
+    .modal .form-row{margin-bottom:12px}
+    .modal select{margin-bottom:12px}
+    .modal textarea{margin-bottom:12px}
+    .modal-actions{display:flex;gap:10px;flex-wrap:wrap}
+    body.modal-open{overflow:hidden}
     @media(max-width:820px){
       .nav-links{display:none}
-      .hero{grid-template-columns:1fr;min-height:auto;padding-top:72px}
+      .hero{grid-template-columns:1fr;min-height:auto;padding-top:68px}
       .profile-card{max-width:560px}
-      .projects,.contact-grid{grid-template-columns:1fr}
+      .projects,.contact-grid,.looking-grid{grid-template-columns:1fr}
       .venture-grid{grid-template-columns:1fr}
-      .venture-visual{border-left:0;border-top:1px solid rgba(255,255,255,.07);min-height:390px}
-      .section-head{display:block}
-      .section-copy{margin-top:14px}
+      .venture-visual{border-left:0!important;border-right:0!important;border-top:1px solid rgba(255,255,255,.07);min-height:390px}
+      .section-head,.looking-top{display:block}
+      .section-copy,.looking-copy{margin-top:14px}
+      .status-strip{grid-template-columns:1fr}
+      .status-item+.status-item{border-left:0!important;border-right:0!important;border-top:1px solid var(--line)}
     }
     @media(max-width:560px){
       .wrap{width:min(100% - 24px,1120px)}
-      .hero{padding:58px 0 36px;gap:28px}
+      .nav-inner{height:66px}
+      .nav-right{gap:10px}
+      .hero{padding:54px 0 32px;gap:28px}
       h1{font-size:68px}
-      section{padding:64px 0}
+      section{padding:62px 0}
       .visual{height:220px}
-      .venture-copy{padding:34px 26px}
+      .venture-copy{padding:34px 25px}
       .venture-visual{min-height:330px;padding:24px}
       .system-map{width:min(100%,320px)}
       .system-core{width:126px;height:126px;border-radius:30px}
       .node{min-width:92px;padding:10px 11px;font-size:10px}
+      .looking-shell{padding:26px 20px}
       .form-row{grid-template-columns:1fr}
       .footer-inner{display:block}
+      .modal-panel{padding:26px 20px}
+      .modal-panel h2{font-size:30px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*:before,*:after{transition:none!important}
     }
   </style>
+
   <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Faisal",
-      "url": "https://faiisalxll-collab.github.io/",
-      "sameAs": [
+      "@context":"https://schema.org",
+      "@type":"Person",
+      "name":"Faisal",
+      "url":"https://faiisalxll-collab.github.io/",
+      "sameAs":[
         "https://x.com/ifaisal96",
         "https://github.com/faiisalxll-collab"
       ],
-      "knowsAbout": [
+      "knowsAbout":[
         "Innovation",
         "Technology",
         "Entrepreneurship",
@@ -297,14 +360,21 @@
     }
   </script>
 </head>
+
 <body>
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="#top">FAISAL</a>
-      <div class="nav-links">
-        <a href="#projects">Projects</a>
-        <a href="#venture">SUDIA Works</a>
-        <a href="#contact">Contact</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#projects" data-i18n="navProjects">Projects</a>
+          <a href="#venture">SUDIA Works</a>
+          <a href="#contact" data-i18n="navContact">Contact</a>
+        </div>
+        <div class="lang-switch" aria-label="Language">
+          <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn" type="button" data-lang="ar" aria-pressed="false">عربي</button>
+        </div>
       </div>
     </div>
   </nav>
@@ -312,26 +382,56 @@
   <main id="top">
     <div class="wrap hero">
       <div>
-        <div class="eyebrow"><span class="dot"></span> Innovation · Products · Technology</div>
-        <h1>Faisal</h1>
-        <div class="lead">Interested in innovation, entrepreneurship, technology, and building AI-powered products. I enjoy exploring new ideas and turning opportunities into real projects.</div>
+        <div class="eyebrow"><span class="dot"></span><span data-i18n="heroEyebrow">Innovation · Products · Technology</span></div>
+        <h1 data-i18n="heroName">Faisal</h1>
+        <div class="lead" data-i18n="heroLead">Interested in innovation, entrepreneurship, technology, and building AI-powered products. I enjoy exploring new ideas and turning opportunities into real projects.</div>
+
+        <div class="founder-thesis">
+          <div class="mark">↗</div>
+          <div>
+            <strong data-i18n="founderThesisLabel">Founder Thesis</strong>
+            <p data-i18n="founderThesis">Building practical digital products around real operational problems.</p>
+          </div>
+        </div>
+
         <div class="actions">
-          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn primary" href="#projects" data-i18n="viewProjects">View Projects</a>
+          <a class="btn accent" href="#venture" data-i18n="exploreSudia">Explore SUDIA Works</a>
           <a class="btn" href="https://x.com/ifaisal96" target="_blank" rel="noreferrer">X ↗</a>
           <a class="btn" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </div>
-      <div class="profile-card"><img class="profile-photo" src="https://static.wixstatic.com/media/68bbbd_194a39bceca345a3ac938a7e68c12ddb~mv2.png" alt="Faisal" width="1254" height="1254" loading="eager" decoding="async" fetchpriority="high"></div>
+
+      <div class="profile-card">
+        <img class="profile-photo" src="https://static.wixstatic.com/media/68bbbd_194a39bceca345a3ac938a7e68c12ddb~mv2.png" alt="Faisal" width="1254" height="1254" loading="eager" decoding="async" fetchpriority="high">
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="status-strip" aria-label="Venture status">
+        <div class="status-item">
+          <span class="status-name">LAQTA</span>
+          <span class="status-state" data-i18n="statusLiveBeta">Live Beta</span>
+        </div>
+        <div class="status-item">
+          <span class="status-name">SUDIA Ops</span>
+          <span class="status-state" data-i18n="statusPrototype">Prototype / Demo</span>
+        </div>
+        <div class="status-item">
+          <span class="status-name">SUDIA Works</span>
+          <span class="status-state" data-i18n="statusPreLaunch">Pre-Launch</span>
+        </div>
+      </div>
     </div>
 
     <section id="projects">
       <div class="wrap">
         <div class="section-head">
           <div>
-            <div class="section-kicker">Selected work</div>
-            <h2>Projects</h2>
+            <div class="section-kicker" data-i18n="projectsKicker">Selected work</div>
+            <h2 data-i18n="projectsTitle">Projects</h2>
           </div>
-          <div class="section-copy">A focused selection of digital products built around practical problems, clear workflows, and simple user experiences.</div>
+          <div class="section-copy" data-i18n="projectsCopy">A focused selection of digital products built around practical problems, clear workflows, and simple user experiences.</div>
         </div>
 
         <div class="projects">
@@ -339,20 +439,20 @@
             <div class="visual laqta">
               <div class="visual-grid"></div>
               <div class="chips">
-                <span class="chip">Deals</span>
-                <span class="chip">Affiliate</span>
-                <span class="chip">Arabic-first</span>
+                <span class="chip" data-i18n="chipDeals">Deals</span>
+                <span class="chip" data-i18n="chipAffiliate">Affiliate</span>
+                <span class="chip" data-i18n="chipArabicFirst">Arabic-first</span>
               </div>
               <div class="laqta-logo">LAQTA · لقطة</div>
             </div>
             <div class="card-body">
               <div class="card-top">
                 <h3>LAQTA — لقطة</h3>
-                <span class="status">Live Beta</span>
+                <span class="status" data-i18n="statusLiveBeta">Live Beta</span>
               </div>
-              <div class="subtitle">Saudi Deals & Affiliate Platform</div>
-              <p class="desc">A Saudi digital platform for discovering offers and discounts from multiple online stores in one place. Built around deal discovery, affiliate tracking, and a simple Arabic-first shopping experience.</p>
-              <a class="link" href="https://laqta-offers.vercel.app" target="_blank" rel="noreferrer">View Project <span>→</span></a>
+              <div class="subtitle" data-i18n="laqtaSubtitle">Saudi Deals & Affiliate Platform</div>
+              <p class="desc" data-i18n="laqtaDesc">A Saudi digital platform for discovering offers and discounts from multiple online stores in one place. Built around deal discovery, affiliate tracking, and a simple Arabic-first shopping experience.</p>
+              <a class="link" href="https://laqta-offers.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="viewProject">View Project</span> ↗</a>
             </div>
           </article>
 
@@ -372,11 +472,11 @@
             <div class="card-body">
               <div class="card-top">
                 <h3>SUDIA Ops</h3>
-                <span class="status">Prototype / Demo</span>
+                <span class="status" data-i18n="statusPrototype">Prototype / Demo</span>
               </div>
-              <div class="subtitle">Operations Control Platform</div>
-              <p class="desc">A digital platform for managing operational incidents, risks, SLA performance, assignments, and workflows from one centralized control center.</p>
-              <a class="link" href="https://nabd-ops-git-feat-control-tower-main-faiisalxll-8727.vercel.app/" target="_blank" rel="noreferrer">View Project <span>→</span></a>
+              <div class="subtitle" data-i18n="opsSubtitle">Operations Control Platform</div>
+              <p class="desc" data-i18n="opsDesc">A digital platform for managing operational incidents, risks, SLA performance, assignments, and workflows from one centralized control center.</p>
+              <a class="link" href="https://nabd-ops-git-feat-control-tower-main-faiisalxll-8727.vercel.app/" target="_blank" rel="noreferrer"><span data-i18n="viewProject">View Project</span> ↗</a>
             </div>
           </article>
         </div>
@@ -388,37 +488,70 @@
         <div class="venture-shell">
           <div class="venture-grid">
             <div class="venture-copy">
-              <div class="venture-label">Featured Venture</div>
+              <div class="venture-label" data-i18n="ventureLabel">Featured Venture</div>
               <h2 class="venture-title">SUDIA Works</h2>
-              <div class="venture-subtitle">The Intelligent Operating System for Construction Projects</div>
-              <p class="venture-thesis">Building a Saudi construction technology platform designed to bring fragmented project information, decisions, quantities, revisions, and workflows into one intelligent environment.</p>
-              <div class="venture-vision">From fragmented construction workflows to one intelligent control layer — with the aim of reducing costly mistakes, improving project visibility, and supporting better decisions from preparation through execution.</div>
+              <div class="venture-subtitle" data-i18n="ventureSubtitle">The Intelligent Operating System for Construction Projects</div>
+              <p class="venture-thesis" data-i18n="ventureThesis">Building a Saudi construction technology platform designed to bring fragmented project information, decisions, quantities, revisions, and workflows into one intelligent environment.</p>
+              <div class="venture-vision" data-i18n="ventureVision">From fragmented construction workflows to one intelligent control layer — with the aim of reducing costly mistakes, improving project visibility, and supporting better decisions from preparation through execution.</div>
               <div class="venture-badges">
-                <span class="venture-badge">Pre-Launch</span>
-                <span class="venture-badge">Construction Tech</span>
-                <span class="venture-badge">Saudi Arabia</span>
+                <span class="venture-badge" data-i18n="statusPreLaunch">Pre-Launch</span>
+                <span class="venture-badge" data-i18n="constructionTech">Construction Tech</span>
+                <span class="venture-badge" data-i18n="saudiArabia">Saudi Arabia</span>
               </div>
-              <div class="venture-ask">Open to early-stage investment and strategic partnerships.</div>
+              <div class="venture-ask" data-i18n="ventureAsk">Open to early-stage investment and strategic partnerships.</div>
               <div class="venture-actions">
-                <a class="btn primary" href="mailto:faiisalxll@gmail.com?subject=SUDIA%20Works%20%E2%80%94%20Investment%20%2F%20Strategic%20Partnership">Discuss SUDIA Works →</a>
-                <a class="btn" href="https://wa.me/966502788361?text=Hello%20Faisal%2C%20I%27d%20like%20to%20discuss%20SUDIA%20Works." target="_blank" rel="noreferrer">WhatsApp ↗</a>
+                <button class="btn primary inquiry-trigger" type="button" data-inquiry="investment" data-i18n="investorInquiry">Investor / Partner Inquiry →</button>
+                <button class="btn accent inquiry-trigger" type="button" data-inquiry="brief" data-i18n="privateBrief">Request Private Brief</button>
+                <a class="btn" href="https://wa.me/966502788361?text=Hello%20Faisal%2C%20I%27d%20like%20to%20discuss%20SUDIA%20Works." target="_blank" rel="noreferrer"><span data-i18n="whatsapp">WhatsApp</span> ↗</a>
               </div>
             </div>
 
-            <div class="venture-visual" aria-label="Abstract construction operating system visualization">
+            <div class="venture-visual" data-i18n-aria="ventureVisualAria" aria-label="Abstract construction operating system visualization">
               <div class="system-map">
                 <div class="connector c1"></div>
                 <div class="connector c2"></div>
                 <div class="connector c3"></div>
                 <div class="connector c4"></div>
-                <div class="node n1">Project Information</div>
-                <div class="node n2">Decisions & Revisions</div>
-                <div class="node n3">Quantities & Visibility</div>
-                <div class="node n4">Execution Workflows</div>
-                <div class="system-core"><div><strong>SUDIA Works</strong><span>Control Layer</span></div></div>
+                <div class="node n1" data-i18n="nodeProject">Project Information</div>
+                <div class="node n2" data-i18n="nodeDecisions">Decisions & Revisions</div>
+                <div class="node n3" data-i18n="nodeQuantities">Quantities & Visibility</div>
+                <div class="node n4" data-i18n="nodeExecution">Execution Workflows</div>
+                <div class="system-core"><div><strong>SUDIA Works</strong><span data-i18n="controlLayer">Control Layer</span></div></div>
               </div>
-              <div class="venture-foot">Built for the future of construction</div>
+              <div class="venture-foot" data-i18n="ventureFoot">Built for the future of construction</div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="looking">
+      <div class="wrap">
+        <div class="looking-shell">
+          <div class="looking-top">
+            <div>
+              <div class="section-kicker" data-i18n="lookingKicker">What I’m looking for</div>
+              <h2 data-i18n="lookingTitle">The right people around the table</h2>
+            </div>
+            <div class="looking-copy" data-i18n="lookingCopy">For SUDIA Works, I’m interested in conversations that can strengthen early validation, industry access, and the path to market.</div>
+          </div>
+
+          <div class="looking-grid">
+            <article class="looking-card">
+              <div class="looking-icon">01</div>
+              <h3 data-i18n="lookingInvestorsTitle">Early-stage investors</h3>
+              <p data-i18n="lookingInvestorsText">Strategic capital and perspective for product validation and the first path to market.</p>
+            </article>
+            <article class="looking-card">
+              <div class="looking-icon">02</div>
+              <h3 data-i18n="lookingPartnersTitle">Strategic partners</h3>
+              <p data-i18n="lookingPartnersText">Contractors, engineering firms, and industry operators interested in early collaboration.</p>
+            </article>
+            <article class="looking-card">
+              <div class="looking-icon">03</div>
+              <h3 data-i18n="lookingExpertsTitle">Construction expertise</h3>
+              <p data-i18n="lookingExpertsText">Engineers and operators who can challenge assumptions and strengthen real-world validation.</p>
+            </article>
           </div>
         </div>
       </div>
@@ -428,33 +561,36 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <div class="section-kicker">Contact</div>
-            <h2>Let’s connect</h2>
+            <div class="section-kicker" data-i18n="contactKicker">Contact</div>
+            <h2 data-i18n="contactTitle">Let’s connect</h2>
           </div>
-          <div class="section-copy">Interested in products, technology, entrepreneurship, and conversations around new ideas.</div>
+          <div class="section-copy" data-i18n="contactCopy">Interested in products, technology, entrepreneurship, and conversations around new ideas.</div>
         </div>
 
         <div class="contact-grid">
           <div class="contact-card">
-            <h3>Find me online</h3>
-            <p>Connect through X, GitHub, email, or WhatsApp.</p>
+            <h3 data-i18n="findOnline">Find me online</h3>
+            <p data-i18n="findOnlineCopy">Connect through X, GitHub, email, or WhatsApp.</p>
             <div class="socials">
               <a class="social" href="https://x.com/ifaisal96" target="_blank" rel="noreferrer">X · @ifaisal96 ↗</a>
               <a class="social" href="https://github.com/faiisalxll-collab" target="_blank" rel="noreferrer">GitHub ↗</a>
-              <a class="social" href="mailto:faiisalxll@gmail.com">Email ↗</a>
-              <a class="social" href="https://wa.me/966502788361" target="_blank" rel="noreferrer">WhatsApp ↗</a>
+              <a class="social" href="mailto:faiisalxll@gmail.com"><span data-i18n="email">Email</span> ↗</a>
+              <a class="social" href="https://wa.me/966502788361" target="_blank" rel="noreferrer"><span data-i18n="whatsapp">WhatsApp</span> ↗</a>
             </div>
           </div>
 
           <div class="form-card">
             <form class="form" id="contactForm">
               <div class="form-row">
-                <input id="name" type="text" placeholder="Name" autocomplete="name" />
-                <input id="email" type="email" placeholder="Email" autocomplete="email" />
+                <label class="sr-only" for="name" data-i18n="nameLabel">Name</label>
+                <input id="name" type="text" data-i18n-placeholder="namePlaceholder" placeholder="Name" autocomplete="name" />
+                <label class="sr-only" for="email" data-i18n="emailLabel">Email</label>
+                <input id="email" type="email" data-i18n-placeholder="emailPlaceholder" placeholder="Email" autocomplete="email" />
               </div>
-              <textarea id="message" placeholder="Message"></textarea>
-              <button class="btn primary" type="submit">Let’s connect</button>
-              <div class="form-note" id="formNote">Submitting opens your email app with the message prepared for Faisal.</div>
+              <label class="sr-only" for="message" data-i18n="messageLabel">Message</label>
+              <textarea id="message" data-i18n-placeholder="messagePlaceholder" placeholder="Message"></textarea>
+              <button class="btn primary" type="submit" data-i18n="sendMessage">Let’s connect</button>
+              <div class="form-note" id="formNote" data-i18n="formNote">Submitting opens your email app with the message prepared for Faisal.</div>
             </form>
           </div>
         </div>
@@ -464,25 +600,350 @@
 
   <footer>
     <div class="wrap footer-inner">
-      <span>© 2026 Faisal. All rights reserved.</span>
-      <span>Built as a lightweight static site.</span>
+      <span data-i18n="footerRights">© 2026 Faisal. All rights reserved.</span>
+      <span data-i18n="footerBuilt">Built as a lightweight static site.</span>
     </div>
   </footer>
 
+  <div class="modal" id="inquiryModal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="inquiryTitle">
+      <button class="modal-close" type="button" aria-label="Close" data-close-modal>×</button>
+      <div class="section-kicker" data-i18n="inquiryKicker">SUDIA Works</div>
+      <h2 id="inquiryTitle" data-i18n="inquiryTitle">Investor / Partner Inquiry</h2>
+      <p class="modal-intro" id="inquiryIntro" data-i18n="inquiryIntro">Share a few details and your email app will open with a prepared message.</p>
+
+      <form id="inquiryForm">
+        <div class="form-row">
+          <label class="sr-only" for="inqName" data-i18n="nameLabel">Name</label>
+          <input id="inqName" type="text" required data-i18n-placeholder="namePlaceholder" placeholder="Name" autocomplete="name" />
+          <label class="sr-only" for="inqOrg" data-i18n="orgLabel">Organization</label>
+          <input id="inqOrg" type="text" data-i18n-placeholder="orgPlaceholder" placeholder="Organization / Company" autocomplete="organization" />
+        </div>
+        <div class="form-row">
+          <label class="sr-only" for="inqEmail" data-i18n="emailLabel">Email</label>
+          <input id="inqEmail" type="email" required data-i18n-placeholder="emailPlaceholder" placeholder="Email" autocomplete="email" />
+          <label class="sr-only" for="inqInterest" data-i18n="interestLabel">Interest</label>
+          <select id="inqInterest" required aria-label="Interest">
+            <option value="Investment" data-i18n="interestInvestment">Investment</option>
+            <option value="Strategic Partnership" data-i18n="interestPartnership">Strategic Partnership</option>
+            <option value="Construction / Engineering Expertise" data-i18n="interestExpertise">Construction / Engineering Expertise</option>
+            <option value="Private Brief" data-i18n="interestBrief">Private Brief</option>
+          </select>
+        </div>
+        <label class="sr-only" for="inqMessage" data-i18n="messageLabel">Message</label>
+        <textarea id="inqMessage" data-i18n-placeholder="inquiryMessagePlaceholder" placeholder="Optional note"></textarea>
+        <div class="modal-actions">
+          <button class="btn primary" type="submit" data-i18n="prepareEmail">Prepare Email →</button>
+          <button class="btn" type="button" data-close-modal data-i18n="cancel">Cancel</button>
+        </div>
+        <div class="form-note" style="margin-top:12px" data-i18n="privacyNote">No sensitive project details are displayed publicly. Private materials are shared selectively.</div>
+      </form>
+    </div>
+  </div>
+
   <script>
-    document.getElementById('contactForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-      const subject = encodeURIComponent('Portfolio contact' + (name ? ' — ' + name : ''));
-      const body = encodeURIComponent(
-        (name ? 'Name: ' + name + '\\n' : '') +
-        (email ? 'Email: ' + email + '\\n\\n' : '\\n') +
-        message
-      );
-      window.location.href = 'mailto:faiisalxll@gmail.com?subject=' + subject + '&body=' + body;
-    });
+    (function(){
+      var translations = {
+        en: {
+          pageTitle: "Faisal — Building Digital Products",
+          pageDescription: "Building digital products at the intersection of innovation, technology, and entrepreneurship. Featured venture: SUDIA Works.",
+          navProjects: "Projects",
+          navContact: "Contact",
+          heroEyebrow: "Innovation · Products · Technology",
+          heroName: "Faisal",
+          heroLead: "Interested in innovation, entrepreneurship, technology, and building AI-powered products. I enjoy exploring new ideas and turning opportunities into real projects.",
+          founderThesisLabel: "Founder Thesis",
+          founderThesis: "Building practical digital products around real operational problems.",
+          viewProjects: "View Projects",
+          exploreSudia: "Explore SUDIA Works",
+          statusLiveBeta: "Live Beta",
+          statusPrototype: "Prototype / Demo",
+          statusPreLaunch: "Pre-Launch",
+          projectsKicker: "Selected work",
+          projectsTitle: "Projects",
+          projectsCopy: "A focused selection of digital products built around practical problems, clear workflows, and simple user experiences.",
+          chipDeals: "Deals",
+          chipAffiliate: "Affiliate",
+          chipArabicFirst: "Arabic-first",
+          laqtaSubtitle: "Saudi Deals & Affiliate Platform",
+          laqtaDesc: "A Saudi digital platform for discovering offers and discounts from multiple online stores in one place. Built around deal discovery, affiliate tracking, and a simple Arabic-first shopping experience.",
+          viewProject: "View Project",
+          opsSubtitle: "Operations Control Platform",
+          opsDesc: "A digital platform for managing operational incidents, risks, SLA performance, assignments, and workflows from one centralized control center.",
+          ventureLabel: "Featured Venture",
+          ventureSubtitle: "The Intelligent Operating System for Construction Projects",
+          ventureThesis: "Building a Saudi construction technology platform designed to bring fragmented project information, decisions, quantities, revisions, and workflows into one intelligent environment.",
+          ventureVision: "From fragmented construction workflows to one intelligent control layer — with the aim of reducing costly mistakes, improving project visibility, and supporting better decisions from preparation through execution.",
+          constructionTech: "Construction Tech",
+          saudiArabia: "Saudi Arabia",
+          ventureAsk: "Open to early-stage investment and strategic partnerships.",
+          investorInquiry: "Investor / Partner Inquiry →",
+          privateBrief: "Request Private Brief",
+          whatsapp: "WhatsApp",
+          ventureVisualAria: "Abstract construction operating system visualization",
+          nodeProject: "Project Information",
+          nodeDecisions: "Decisions & Revisions",
+          nodeQuantities: "Quantities & Visibility",
+          nodeExecution: "Execution Workflows",
+          controlLayer: "Control Layer",
+          ventureFoot: "Built for the future of construction",
+          lookingKicker: "What I’m looking for",
+          lookingTitle: "The right people around the table",
+          lookingCopy: "For SUDIA Works, I’m interested in conversations that can strengthen early validation, industry access, and the path to market.",
+          lookingInvestorsTitle: "Early-stage investors",
+          lookingInvestorsText: "Strategic capital and perspective for product validation and the first path to market.",
+          lookingPartnersTitle: "Strategic partners",
+          lookingPartnersText: "Contractors, engineering firms, and industry operators interested in early collaboration.",
+          lookingExpertsTitle: "Construction expertise",
+          lookingExpertsText: "Engineers and operators who can challenge assumptions and strengthen real-world validation.",
+          contactKicker: "Contact",
+          contactTitle: "Let’s connect",
+          contactCopy: "Interested in products, technology, entrepreneurship, and conversations around new ideas.",
+          findOnline: "Find me online",
+          findOnlineCopy: "Connect through X, GitHub, email, or WhatsApp.",
+          email: "Email",
+          nameLabel: "Name",
+          emailLabel: "Email",
+          messageLabel: "Message",
+          namePlaceholder: "Name",
+          emailPlaceholder: "Email",
+          messagePlaceholder: "Message",
+          sendMessage: "Let’s connect",
+          formNote: "Submitting opens your email app with the message prepared for Faisal.",
+          footerRights: "© 2026 Faisal. All rights reserved.",
+          footerBuilt: "Built as a lightweight static site.",
+          inquiryKicker: "SUDIA Works",
+          inquiryTitle: "Investor / Partner Inquiry",
+          inquiryBriefTitle: "Request Private Brief",
+          inquiryIntro: "Share a few details and your email app will open with a prepared message.",
+          inquiryBriefIntro: "A concise private brief can be shared selectively with relevant investors and strategic partners.",
+          orgLabel: "Organization",
+          orgPlaceholder: "Organization / Company",
+          interestLabel: "Interest",
+          interestInvestment: "Investment",
+          interestPartnership: "Strategic Partnership",
+          interestExpertise: "Construction / Engineering Expertise",
+          interestBrief: "Private Brief",
+          inquiryMessagePlaceholder: "Optional note",
+          prepareEmail: "Prepare Email →",
+          cancel: "Cancel",
+          privacyNote: "No sensitive project details are displayed publicly. Private materials are shared selectively."
+        },
+        ar: {
+          pageTitle: "فيصل — بناء منتجات رقمية",
+          pageDescription: "أبني منتجات رقمية عند تقاطع الابتكار والتقنية وريادة الأعمال، والمشروع الرئيسي حاليًا هو SUDIA Works.",
+          navProjects: "المشاريع",
+          navContact: "تواصل",
+          heroEyebrow: "ابتكار · منتجات · تقنية",
+          heroName: "فيصل",
+          heroLead: "مهتم بالابتكار وريادة الأعمال والتقنية وبناء منتجات مدعومة بالذكاء الاصطناعي. أستمتع باستكشاف الأفكار الجديدة وتحويل الفرص إلى مشاريع حقيقية.",
+          founderThesisLabel: "رؤيتي في البناء",
+          founderThesis: "أبني منتجات رقمية عملية حول مشكلات تشغيلية حقيقية.",
+          viewProjects: "استعرض المشاريع",
+          exploreSudia: "استكشف SUDIA Works",
+          statusLiveBeta: "نسخة تجريبية مباشرة",
+          statusPrototype: "نموذج أولي / تجريبي",
+          statusPreLaunch: "ما قبل الإطلاق",
+          projectsKicker: "أعمال مختارة",
+          projectsTitle: "المشاريع",
+          projectsCopy: "مجموعة مختارة من المنتجات الرقمية المبنية حول مشكلات عملية ومسارات عمل واضحة وتجارب استخدام بسيطة.",
+          chipDeals: "عروض",
+          chipAffiliate: "تسويق بالعمولة",
+          chipArabicFirst: "عربي أولًا",
+          laqtaSubtitle: "منصة سعودية للعروض والتسويق بالعمولة",
+          laqtaDesc: "منصة رقمية سعودية لاكتشاف العروض والخصومات من متاجر إلكترونية متعددة في مكان واحد، مع تجربة عربية بسيطة وتركيز على اكتشاف العروض وتتبع الإحالات.",
+          viewProject: "عرض المشروع",
+          opsSubtitle: "منصة للتحكم التشغيلي",
+          opsDesc: "منصة رقمية لإدارة الحالات التشغيلية والمخاطر ومستويات الخدمة والتكليفات ومسارات العمل من مركز تحكم موحد.",
+          ventureLabel: "المشروع الرئيسي",
+          ventureSubtitle: "نظام التشغيل الذكي لمشاريع البناء",
+          ventureThesis: "نعمل على بناء منصة تقنية سعودية لقطاع الإنشاءات تهدف إلى جمع معلومات المشروع وقراراته وكمياته وتعديلاته ومسارات العمل المتفرقة داخل بيئة ذكية واحدة.",
+          ventureVision: "من أعمال إنشائية متفرقة إلى طبقة تحكم ذكية واحدة، بهدف تقليل الأخطاء المكلفة، وتحسين وضوح المشروع، ودعم اتخاذ قرارات أفضل من مرحلة التجهيز وحتى التنفيذ.",
+          constructionTech: "تقنية الإنشاءات",
+          saudiArabia: "السعودية",
+          ventureAsk: "المشروع مفتوح للاستثمار المبكر والشراكات الاستراتيجية.",
+          investorInquiry: "استفسار استثماري / شراكة ←",
+          privateBrief: "طلب ملخص خاص",
+          whatsapp: "واتساب",
+          ventureVisualAria: "تصور تجريدي لنظام تشغيل مشاريع البناء",
+          nodeProject: "معلومات المشروع",
+          nodeDecisions: "القرارات والتعديلات",
+          nodeQuantities: "الكميات ووضوح المشروع",
+          nodeExecution: "مسارات التنفيذ",
+          controlLayer: "طبقة التحكم",
+          ventureFoot: "نبني لمستقبل قطاع الإنشاءات",
+          lookingKicker: "ما الذي أبحث عنه",
+          lookingTitle: "الأشخاص المناسبون حول الطاولة",
+          lookingCopy: "في SUDIA Works أهتم بالمحادثات التي تعزز التحقق المبكر، والوصول إلى القطاع، والمسار نحو السوق.",
+          lookingInvestorsTitle: "مستثمرون في المرحلة المبكرة",
+          lookingInvestorsText: "رأس مال استراتيجي وخبرة تساعد في التحقق من المنتج وبناء أول مسار واضح نحو السوق.",
+          lookingPartnersTitle: "شركاء استراتيجيون",
+          lookingPartnersText: "مقاولون ومكاتب هندسية ومشغلون في القطاع لديهم اهتمام بالتعاون المبكر.",
+          lookingExpertsTitle: "خبرات إنشائية وهندسية",
+          lookingExpertsText: "مهندسون وممارسون يساعدون في اختبار الفرضيات وتقوية التحقق الواقعي من المنتج.",
+          contactKicker: "تواصل",
+          contactTitle: "لنتواصل",
+          contactCopy: "أرحب بالمحادثات حول المنتجات والتقنية وريادة الأعمال والأفكار الجديدة.",
+          findOnline: "قنوات التواصل",
+          findOnlineCopy: "يمكنك التواصل عبر X أو GitHub أو البريد الإلكتروني أو واتساب.",
+          email: "البريد الإلكتروني",
+          nameLabel: "الاسم",
+          emailLabel: "البريد الإلكتروني",
+          messageLabel: "الرسالة",
+          namePlaceholder: "الاسم",
+          emailPlaceholder: "البريد الإلكتروني",
+          messagePlaceholder: "الرسالة",
+          sendMessage: "إرسال رسالة",
+          formNote: "عند الإرسال سيتم فتح تطبيق البريد مع تجهيز الرسالة تلقائيًا.",
+          footerRights: "© 2026 فيصل. جميع الحقوق محفوظة.",
+          footerBuilt: "موقع شخصي خفيف وسريع.",
+          inquiryKicker: "SUDIA Works",
+          inquiryTitle: "استفسار استثماري / شراكة",
+          inquiryBriefTitle: "طلب ملخص خاص",
+          inquiryIntro: "أدخل معلومات مختصرة وسيتم فتح تطبيق البريد برسالة مجهزة تلقائيًا.",
+          inquiryBriefIntro: "يمكن مشاركة ملخص خاص ومختصر بشكل انتقائي مع المستثمرين والشركاء الاستراتيجيين ذوي الصلة.",
+          orgLabel: "الجهة",
+          orgPlaceholder: "الجهة / الشركة",
+          interestLabel: "نوع الاهتمام",
+          interestInvestment: "استثمار",
+          interestPartnership: "شراكة استراتيجية",
+          interestExpertise: "خبرة إنشائية / هندسية",
+          interestBrief: "طلب ملخص خاص",
+          inquiryMessagePlaceholder: "ملاحظة اختيارية",
+          prepareEmail: "تجهيز البريد ←",
+          cancel: "إلغاء",
+          privacyNote: "لا تُعرض تفاصيل المشروع الحساسة بشكل عام، وتتم مشاركة المواد الخاصة بشكل انتقائي."
+        }
+      };
+
+      var currentLang = localStorage.getItem("siteLang") || "en";
+      var inquiryType = "investment";
+      var modal = document.getElementById("inquiryModal");
+
+      function t(key){
+        return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key;
+      }
+
+      function applyLanguage(lang){
+        currentLang = lang === "ar" ? "ar" : "en";
+        localStorage.setItem("siteLang", currentLang);
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+
+        document.querySelectorAll("[data-i18n]").forEach(function(el){
+          var key = el.getAttribute("data-i18n");
+          if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+        });
+
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el){
+          var key = el.getAttribute("data-i18n-placeholder");
+          if (translations[currentLang][key]) el.setAttribute("placeholder", translations[currentLang][key]);
+        });
+
+        document.querySelectorAll("[data-i18n-aria]").forEach(function(el){
+          var key = el.getAttribute("data-i18n-aria");
+          if (translations[currentLang][key]) el.setAttribute("aria-label", translations[currentLang][key]);
+        });
+
+        document.querySelectorAll(".lang-btn").forEach(function(btn){
+          var active = btn.getAttribute("data-lang") === currentLang;
+          btn.classList.toggle("active", active);
+          btn.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        document.title = t("pageTitle");
+        var description = document.querySelector('meta[name="description"]');
+        if (description) description.setAttribute("content", t("pageDescription"));
+
+        refreshInquiryCopy();
+      }
+
+      function refreshInquiryCopy(){
+        if (!modal) return;
+        var title = document.getElementById("inquiryTitle");
+        var intro = document.getElementById("inquiryIntro");
+        if (inquiryType === "brief"){
+          title.textContent = t("inquiryBriefTitle");
+          intro.textContent = t("inquiryBriefIntro");
+        } else {
+          title.textContent = t("inquiryTitle");
+          intro.textContent = t("inquiryIntro");
+        }
+      }
+
+      document.querySelectorAll(".lang-btn").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          applyLanguage(btn.getAttribute("data-lang"));
+        });
+      });
+
+      function openInquiry(type){
+        inquiryType = type || "investment";
+        var select = document.getElementById("inqInterest");
+        if (inquiryType === "brief") select.value = "Private Brief";
+        else select.value = "Investment";
+        refreshInquiryCopy();
+        modal.hidden = false;
+        document.body.classList.add("modal-open");
+        setTimeout(function(){ document.getElementById("inqName").focus(); }, 50);
+      }
+
+      function closeInquiry(){
+        modal.hidden = true;
+        document.body.classList.remove("modal-open");
+      }
+
+      document.querySelectorAll(".inquiry-trigger").forEach(function(btn){
+        btn.addEventListener("click", function(){ openInquiry(btn.getAttribute("data-inquiry")); });
+      });
+
+      document.querySelectorAll("[data-close-modal]").forEach(function(el){
+        el.addEventListener("click", closeInquiry);
+      });
+
+      document.addEventListener("keydown", function(e){
+        if (e.key === "Escape" && !modal.hidden) closeInquiry();
+      });
+
+      document.getElementById("contactForm").addEventListener("submit", function(e){
+        e.preventDefault();
+        var name = document.getElementById("name").value.trim();
+        var email = document.getElementById("email").value.trim();
+        var message = document.getElementById("message").value.trim();
+        var subject = encodeURIComponent("Portfolio contact" + (name ? " — " + name : ""));
+        var body = encodeURIComponent(
+          (name ? "Name: " + name + "\n" : "") +
+          (email ? "Email: " + email + "\n\n" : "\n") +
+          message
+        );
+        window.location.href = "mailto:faiisalxll@gmail.com?subject=" + subject + "&body=" + body;
+      });
+
+      document.getElementById("inquiryForm").addEventListener("submit", function(e){
+        e.preventDefault();
+        var name = document.getElementById("inqName").value.trim();
+        var org = document.getElementById("inqOrg").value.trim();
+        var email = document.getElementById("inqEmail").value.trim();
+        var interest = document.getElementById("inqInterest").value;
+        var message = document.getElementById("inqMessage").value.trim();
+
+        var subjectText = inquiryType === "brief"
+          ? "SUDIA Works — Private Brief Request"
+          : "SUDIA Works — Investor / Partner Inquiry";
+
+        var bodyText =
+          "Name: " + name + "\n" +
+          (org ? "Organization: " + org + "\n" : "") +
+          "Email: " + email + "\n" +
+          "Interest: " + interest + "\n\n" +
+          (message ? "Note: " + message + "\n" : "");
+
+        window.location.href = "mailto:faiisalxll@gmail.com?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
+      });
+
+      applyLanguage(currentLang);
+    })();
   </script>
 </body>
 </html>
