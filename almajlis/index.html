@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المجلس — فريقك من وكلاء الذكاء الاصطناعي</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { font-family: 'SF Arabic', 'Segoe UI', Tahoma, sans-serif; overflow: hidden; background: #1a1410; color: #F5F2EA; user-select: none; }
+  #scene { position: fixed; inset: 0; }
+  #topbar { position: fixed; top: 0; left: 0; right: 0; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(26,20,16,0.85), transparent); z-index: 50; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
+  #topbar.visible { opacity: 1; }
+  #room-name { font-size: 15px; font-weight: 500; color: #E8D9BE; letter-spacing: 0.5px; }
+  #status-bar { display: flex; gap: 20px; align-items: center; font-size: 13px; color: #C9B79C; }
+  #cups-counter { background: rgba(255,217,160,0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,217,160,0.25); color: #FFD9A0; }
+  #log-btn { pointer-events: auto; cursor: pointer; padding: 6px 16px; border-radius: 20px; background: transparent; border: 1px solid rgba(232,217,190,0.3); color: #E8D9BE; font-family: inherit; font-size: 13px; transition: all 0.2s; }
+  #log-btn:hover { background: rgba(232,217,190,0.1); border-color: #E8D9BE; }
+  #labels { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+  .agent-label { position: absolute; background: rgba(26,20,16,0.85); border: 1px solid rgba(232,217,190,0.25); padding: 4px 12px; border-radius: 14px; font-size: 12px; color: #E8D9BE; white-space: nowrap; opacity: 0; transition: opacity 0.5s ease; pointer-events: auto; cursor: pointer; backdrop-filter: blur(6px); }
+  .agent-label.visible { opacity: 1; }
+  .agent-label:hover { border-color: #FFD9A0; color: #FFD9A0; }
+  .agent-label.working::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #FFD9A0; margin-left: 6px; animation: pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+  #task-card { position: fixed; top: 70px; left: 24px; width: 300px; background: rgba(26,20,16,0.94); border: 1px solid rgba(232,217,190,0.2); border-radius: 12px; padding: 18px; z-index: 40; pointer-events: none; opacity: 0; transform: translateX(-10px); transition: all 0.3s ease; backdrop-filter: blur(10px); }
+  #task-card.visible { opacity: 1; transform: translateX(0); pointer-events: auto; }
+  #task-card h4 { font-size: 13px; color: #FFD9A0; margin-bottom: 10px; font-weight: 500; }
+  #task-card .field { font-size: 12px; color: #C9B79C; margin-bottom: 8px; line-height: 1.6; }
+  #task-card .field span { color: #F5F2EA; }
+  #task-card .state-pill { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; background: rgba(255,217,160,0.15); color: #FFD9A0; margin-top: 6px; }
+  #dialog { position: fixed; bottom: 100px; left: 50%; transform: translate(-50%, 20px); max-width: 480px; width: calc(100% - 48px); background: rgba(26,20,16,0.96); border: 1px solid rgba(255,217,160,0.3); border-radius: 16px; padding: 20px 24px; z-index: 60; opacity: 0; pointer-events: none; transition: all 0.4s ease; backdrop-filter: blur(12px); text-align: center; }
+  #dialog.visible { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  #dialog .speaker { font-size: 12px; color: #FFD9A0; margin-bottom: 8px; font-weight: 500; }
+  #dialog .text { font-size: 15px; color: #F5F2EA; line-height: 1.7; margin-bottom: 16px; }
+  #dialog .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  #dialog button { padding: 10px 22px; border-radius: 10px; background: transparent; border: 1px solid rgba(232,217,190,0.35); color: #E8D9BE; font-family: inherit; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  #dialog button:hover { background: rgba(255,217,160,0.1); border-color: #FFD9A0; color: #FFD9A0; }
+  #dialog button.primary { background: #7A1F1F; border-color: #7A1F1F; color: #F5F2EA; }
+  #dialog button.primary:hover { background: #9A2A2A; border-color: #9A2A2A; }
+  #approval { position: fixed; bottom: 100px; left: 50%; transform: translate(-50%, 20px); max-width: 540px; width: calc(100% - 48px); background: rgba(26,20,16,0.97); border: 1px solid rgba(255,217,160,0.4); border-radius: 16px; padding: 22px 26px; z-index: 60; opacity: 0; pointer-events: none; transition: all 0.4s ease; backdrop-filter: blur(12px); }
+  #approval.visible { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  #approval .header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  #approval .cup-icon { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #C9A24B, #7A1F1F); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  #approval .title { font-size: 15px; color: #FFD9A0; font-weight: 500; }
+  #approval .item { font-size: 13px; color: #C9B79C; padding: 10px 0; border-top: 1px solid rgba(232,217,190,0.1); line-height: 1.6; }
+  #approval .item .label { color: #F5F2EA; }
+  #approval .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  #approval button { flex: 1; min-width: 120px; padding: 12px 20px; border-radius: 10px; font-family: inherit; font-size: 14px; cursor: pointer; border: 1px solid rgba(232,217,190,0.35); background: transparent; color: #E8D9BE; transition: all 0.2s; }
+  #approval button:hover { background: rgba(255,217,160,0.08); }
+  #approval button.pour { background: #C9A24B; border-color: #C9A24B; color: #1a1410; font-weight: 600; }
+  #approval button.pour:hover { background: #FFD9A0; }
+  #log-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; max-width: 100%; background: rgba(26,20,16,0.98); border-right: 1px solid rgba(232,217,190,0.2); z-index: 70; transform: translateX(100%); transition: transform 0.4s ease; display: flex; flex-direction: column; backdrop-filter: blur(14px); }
+  #log-panel.visible { transform: translateX(0); }
+  #log-panel .header { padding: 20px 24px; border-bottom: 1px solid rgba(232,217,190,0.15); display: flex; justify-content: space-between; align-items: center; }
+  #log-panel .header h3 { font-size: 16px; color: #FFD9A0; font-weight: 500; }
+  #log-panel .close { background: none; border: none; color: #C9B79C; font-size: 22px; cursor: pointer; line-height: 1; padding: 0 4px; }
+  #log-panel .close:hover { color: #F5F2EA; }
+  #log-list { flex: 1; overflow-y: auto; padding: 16px 24px; }
+  #log-list::-webkit-scrollbar { width: 4px; }
+  #log-list::-webkit-scrollbar-thumb { background: rgba(232,217,190,0.2); border-radius: 2px; }
+  .log-entry { padding: 12px 0; border-bottom: 1px solid rgba(232,217,190,0.08); font-size: 12.5px; line-height: 1.7; }
+  .log-entry .meta { display: flex; justify-content: space-between; color: #7A6A55; margin-bottom: 4px; font-size: 11px; }
+  .log-entry .actor { color: #FFD9A0; }
+  .log-entry .action { color: #E8D9BE; }
+  .log-entry .reason { color: #C9B79C; margin-top: 4px; padding-right: 8px; border-right: 2px solid rgba(201,162,75,0.3); }
+  #entry { position: fixed; inset: 0; z-index: 100; background: radial-gradient(ellipse at center, #2a1f15 0%, #0e0a08 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease; }
+  #entry.fade-out { opacity: 0; pointer-events: none; }
+  #entry .door { width: 160px; height: 240px; background: linear-gradient(180deg, #5A3E2B 0%, #3a2618 100%); border-radius: 80px 80px 0 0; position: relative; box-shadow: 0 0 60px rgba(255,217,160,0.3), inset 0 0 40px rgba(0,0,0,0.5); margin-bottom: 40px; overflow: hidden; }
+  #entry .door::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; border-radius: 50%; background: #C9A24B; box-shadow: 0 0 20px #C9A24B; }
+  #entry h1 { font-size: 22px; font-weight: 400; color: #E8D9BE; margin-bottom: 10px; text-align: center; }
+  #entry p { font-size: 14px; color: #9A8A75; margin-bottom: 32px; text-align: center; max-width: 320px; line-height: 1.7; }
+  #entry button { padding: 14px 44px; border-radius: 12px; background: transparent; border: 1px solid rgba(255,217,160,0.5); color: #FFD9A0; font-family: inherit; font-size: 15px; cursor: pointer; transition: all 0.3s; }
+  #entry button:hover { background: rgba(255,217,160,0.1); border-color: #FFD9A0; box-shadow: 0 0 30px rgba(255,217,160,0.2); }
+  #toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-20px); background: rgba(26,20,16,0.95); border: 1px solid rgba(201,162,75,0.4); padding: 10px 22px; border-radius: 24px; font-size: 13px; color: #FFD9A0; z-index: 80; opacity: 0; pointer-events: none; transition: all 0.3s ease; }
+  #toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 640px) { #task-card { width: calc(100% - 48px); top: auto; bottom: 90px; left: 24px; } #log-panel { width: 100%; } #dialog, #approval { bottom: 20px; } }
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div id="labels"></div>
+<div id="topbar">
+  <div id="room-name">مجلس — مكتبك من وكلاء الذكاء الاصطناعي</div>
+  <div id="status-bar"><span id="cups-counter">الفناجين: 5 / 60</span><button id="log-btn">سجل القرار</button></div>
+</div>
+<div id="task-card">
+  <h4 id="tc-title">المهمة</h4>
+  <div class="field">الموجز: <span id="tc-brief">—</span></div>
+  <div class="field">الدورة: <span id="tc-cycle">—</span></div>
+  <div class="field">آخر ملاحظة: <span id="tc-note">—</span></div>
+  <div class="state-pill" id="tc-state">—</div>
+</div>
+<div id="dialog"><div class="speaker" id="dialog-speaker">القهوجي</div><div class="text" id="dialog-text"></div><div class="actions" id="dialog-actions"></div></div>
+<div id="approval">
+  <div class="header"><div class="cup-icon">☕</div><div class="title">القهوجي ينتظر إشارتك</div></div>
+  <div id="approval-items"></div>
+  <div class="actions"><button class="pour" onclick="approveAction()">صبّ</button><button onclick="holdAction()">ليس الآن</button><button onclick="showPreview()">ورّني أولًا</button></div>
+</div>
+<div id="log-panel"><div class="header"><h3>سجل القرار</h3><button class="close" onclick="toggleLog()">×</button></div><div id="log-list"></div></div>
+<div id="toast"></div>
+<div id="entry"><div class="door"></div><h1>المجلس مفتوح</h1><p>حيث تجتمع النماذج، وتتناقش، ولا يُنفَّذ شيء إلا بإشارتك.</p><button onclick="enterMajlis()">ادخل</button></div>
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x1a1410, 12, 26);
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+camera.position.set(0, 7.5, 8); camera.lookAt(0, 0.5, -1);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+renderer.setSize(innerWidth, innerHeight); renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.getElementById('scene').appendChild(renderer.domElement);
+scene.add(new THREE.AmbientLight(0xC9B79C, 0.6));
+const fanoos = new THREE.PointLight(0xFFD9A0, 2.5, 20, 1.5);
+fanoos.position.set(0, 5, 0); fanoos.castShadow = true; fanoos.shadow.mapSize.width = 1024; fanoos.shadow.mapSize.height = 1024; fanoos.shadow.bias = -0.001; scene.add(fanoos);
+const fill = new THREE.DirectionalLight(0xFFD9A0, 0.4); fill.position.set(4, 8, 6); scene.add(fill);
+function makeCarpetTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 512;
+  const ctx = c.getContext('2d'); ctx.fillStyle = '#7A1F1F'; ctx.fillRect(0, 0, 512, 512); ctx.strokeStyle = '#C9A24B'; ctx.lineWidth = 6; ctx.strokeRect(20, 20, 472, 472); ctx.lineWidth = 2; ctx.strokeRect(36, 36, 440, 440);
+  for (let i = 0; i < 5; i++) for (let j = 0; j < 5; j++) {
+    const x = 76 + i * 90, y = 76 + j * 90; ctx.strokeStyle = 'rgba(201,162,75,0.55)'; ctx.beginPath(); ctx.moveTo(x, y - 26); ctx.lineTo(x + 26, y); ctx.lineTo(x, y + 26); ctx.lineTo(x - 26, y); ctx.closePath(); ctx.stroke(); ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.stroke();
+  }
+  return new THREE.CanvasTexture(c);
+}
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), new THREE.MeshStandardMaterial({ map: makeCarpetTexture(), roughness: 0.95 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xC9B79C, roughness: 1, side: THREE.BackSide, flatShading: true });
+const walls = new THREE.Mesh(new THREE.CylinderGeometry(9, 9, 5, 8, 1, true), wallMat); walls.position.y = 2.5; walls.receiveShadow = true; scene.add(walls);
+const fanoosGroup = new THREE.Group();
+const fanoosBody = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.35, 0.6, 6), new THREE.MeshStandardMaterial({ color: 0xC9A24B, emissive: 0xFFD9A0, emissiveIntensity: 1.2, flatShading: true }));
+fanoosGroup.add(fanoosBody);
+const chain = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 2, 4), new THREE.MeshStandardMaterial({ color: 0x3a2618 })); chain.position.y = 1.3; fanoosGroup.add(chain); fanoosGroup.position.set(0, 4.6, 0); scene.add(fanoosGroup);
+const dalleh = new THREE.Group();
+const dBody = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.3, 0.5, 8), new THREE.MeshStandardMaterial({ color: 0xC9A24B, metalness: 0.6, roughness: 0.4, flatShading: true }));
+dBody.position.y = 0.28; dBody.castShadow = true; dalleh.add(dBody);
+const dNeck = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.14, 0.18, 8), new THREE.MeshStandardMaterial({ color: 0xC9A24B, metalness: 0.6, flatShading: true })); dNeck.position.y = 0.6; dalleh.add(dNeck);
+const dTop = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 6), new THREE.MeshStandardMaterial({ color: 0xC9A24B, metalness: 0.6, flatShading: true })); dTop.position.y = 0.72; dalleh.add(dTop);
+const dSpout = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 0.35, 6), new THREE.MeshStandardMaterial({ color: 0xC9A24B, metalness: 0.6, flatShading: true })); dSpout.position.set(-0.25, 0.4, 0); dSpout.rotation.z = 0.5; dalleh.add(dSpout); dalleh.position.set(0, 0, 0); scene.add(dalleh);
+for (let i = 0; i < 4; i++) {
+  const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.05, 0.08, 8), new THREE.MeshStandardMaterial({ color: 0xF5F2EA, flatShading: true }));
+  const a = (i / 4) * Math.PI * 2; cup.position.set(Math.cos(a) * 0.55, 0.04, Math.sin(a) * 0.55); scene.add(cup);
+}
+const book = new THREE.Group();
+const bookBase = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.14, 0.9), new THREE.MeshStandardMaterial({ color: 0x5A3E2B, flatShading: true })); bookBase.castShadow = true; book.add(bookBase);
+const pages = new THREE.Mesh(new THREE.BoxGeometry(1.18, 0.2, 0.78), new THREE.MeshStandardMaterial({ color: 0xF5F2EA, emissive: 0x000000, flatShading: true })); pages.position.y = 0.04; pages.castShadow = true; book.add(pages); book.position.set(0, 0.1, 3.2); book.rotation.y = 0.15; scene.add(book);
+function makeAgent(cfg) {
+  const g = new THREE.Group(), seated = cfg.seated !== false, robeH = seated ? 0.85 : 1.35;
+  const thobeMat = new THREE.MeshStandardMaterial({ color: cfg.thobe, flatShading: true, roughness: 0.9 });
+  const robe = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.5, robeH, 7), thobeMat); robe.position.y = robeH / 2; robe.castShadow = true; g.add(robe);
+  if (cfg.bisht) { const bisht = new THREE.Mesh(new THREE.CylinderGeometry(0.33, 0.55, robeH * 0.95, 7, 1, true), new THREE.MeshStandardMaterial({ color: cfg.bisht, side: THREE.DoubleSide, flatShading: true, roughness: 0.85 })); bisht.position.y = robeH / 2 + 0.02; bisht.castShadow = true; g.add(bisht); }
+  const skin = new THREE.MeshStandardMaterial({ color: cfg.skin || 0xD9A57A, flatShading: true });
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.2, 8, 6), skin); head.position.y = robeH + 0.18; head.castShadow = true; g.add(head);
+  const headdress = new THREE.Mesh(new THREE.SphereGeometry(0.24, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.62), new THREE.MeshStandardMaterial({ color: cfg.headdress, flatShading: true, roughness: 0.95 })); headdress.position.y = robeH + 0.19; headdress.castShadow = true; g.add(headdress);
+  if (cfg.ogal) { const ogal = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.025, 5, 12), new THREE.MeshStandardMaterial({ color: 0x141414, flatShading: true })); ogal.position.y = robeH + 0.31; ogal.rotation.x = Math.PI / 2; g.add(ogal); }
+  if (cfg.eyes !== false) { const eyeMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a }), eyeGeo = new THREE.SphereGeometry(0.025, 6, 6), eL = new THREE.Mesh(eyeGeo, eyeMat), eR = new THREE.Mesh(eyeGeo, eyeMat); eL.position.set(-0.06, robeH + 0.2, 0.18); eR.position.set(0.06, robeH + 0.2, 0.18); g.add(eL, eR); }
+  if (cfg.glasses) { const gMat = new THREE.MeshStandardMaterial({ color: 0x141414 }), gGeo = new THREE.TorusGeometry(0.05, 0.008, 4, 10), gl = new THREE.Mesh(gGeo, gMat), gr = new THREE.Mesh(gGeo, gMat); gl.position.set(-0.06, robeH + 0.2, 0.2); gr.position.set(0.06, robeH + 0.2, 0.2); g.add(gl, gr); }
+  const armGeo = new THREE.CylinderGeometry(0.06, 0.055, 0.5, 6), armMat = thobeMat, aL = new THREE.Mesh(armGeo, armMat), aR = new THREE.Mesh(armGeo, armMat);
+  aL.position.set(-0.38, robeH * 0.55, 0); aR.position.set(0.38, robeH * 0.55, 0); aL.rotation.z = 0.28; aR.rotation.z = -0.28; aL.castShadow = aR.castShadow = true; g.add(aL, aR);
+  if (seated) { const backrest = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.32, 0.22), new THREE.MeshStandardMaterial({ color: 0xD9C7A7, flatShading: true })); backrest.position.set(0, 0.16, -0.42); backrest.castShadow = true; g.add(backrest); }
+  g.userData = { thobeMat, arms: [aL, aR], robe, seated }; return g;
+}
+function makeThinkingCloud() {
+  const cloud = new THREE.Group(), mat = new THREE.MeshStandardMaterial({ color: 0xFFD9A0, emissive: 0xFFD9A0, emissiveIntensity: 0.5, transparent: true, opacity: 0.85, flatShading: true });
+  for (let i = 0; i < 3; i++) { const dot = new THREE.Mesh(new THREE.SphereGeometry(0.06, 6, 5), mat); dot.position.x = (i - 1) * 0.14; cloud.add(dot); }
+  cloud.visible = false; cloud.userData.mat = mat; return cloud;
+}
+const agents = {};
+function placeAgent(key, cfg, x, z, rotY) {
+  const g = makeAgent(cfg); g.position.set(x, 0, z); g.rotation.y = rotY;
+  const cloud = makeThinkingCloud(); cloud.position.set(x, cfg.seated === false ? 2.1 : 1.7, z); scene.add(g); scene.add(cloud);
+  agents[key] = { group: g, cloud, cfg, pos: { x, z } }; return agents[key];
+}
+placeAgent('you', { thobe: 0xF5F2EA, bisht: 0x5A3E2B, headdress: 0xFFFFFF, ogal: true, eyes: false, seated: true }, 0, -4.2, 0);
+placeAgent('mudir', { thobe: 0xF5F2EA, headdress: 0xFFFFFF, ogal: true, skin: 0xD9A57A }, -2.6, -3.2, 0.4);
+placeAgent('mushrif', { thobe: 0xF5F2EA, bisht: 0x5a5a5a, headdress: 0xFFFFFF, ogal: true, skin: 0xD9A57A }, 2.6, -3.2, -0.4);
+placeAgent('muhallil', { thobe: 0xF0E8D8, headdress: 0xA83232, skin: 0xD9A57A }, -3.8, -1.0, 0.9);
+placeAgent('musawwiq', { thobe: 0xF5F2EA, headdress: 0xFFFFFF, skin: 0xD9A57A }, -3.8, 1.6, 1.3);
+placeAgent('mursal', { thobe: 0xE8E0D0, headdress: 0xA83232, skin: 0xD9A57A }, 3.8, 1.6, -1.3);
+placeAgent('muraji', { thobe: 0xF5F2EA, bisht: 0x8a7a5a, headdress: 0xFFFFFF, skin: 0xD9A57A, glasses: true }, 3.8, -1.0, -0.9);
+const qahwaji = placeAgent('qahwaji', { thobe: 0xF5F2EA, headdress: 0xA83232, skin: 0xD9A57A, seated: false }, 0.9, 0.3, -0.5);
+const qDalleh = dalleh.clone(); qDalleh.scale.set(0.5, 0.5, 0.5); qDalleh.position.set(0.9 + 0.25, 0.4, 0.3); scene.add(qDalleh); qahwaji.qDalleh = qDalleh; qahwaji.homePos = { x: 0.9, z: 0.3 };
+const labelsLayer = document.getElementById('labels'), labelEls = {};
+const agentNames = { mudir: 'مدير المكتب', mushrif: 'المشرف العام', muhallil: 'محلل بيانات', musawwiq: 'مسوق محتوى', mursal: 'مسوق بريد', muraji: 'مراجع الجودة', qahwaji: 'القهوجي' };
+Object.keys(agentNames).forEach(key => { const el = document.createElement('div'); el.className = 'agent-label'; el.textContent = agentNames[key]; el.onclick = () => showTaskCard(key); labelsLayer.appendChild(el); labelEls[key] = el; });
+function updateLabels() {
+  Object.keys(agentNames).forEach(key => { const a = agents[key], el = labelEls[key]; if (!a || !el) return; const v = new THREE.Vector3(a.pos.x, a.cfg.seated === false ? 2.0 : 1.6, a.pos.z); v.project(camera); const x = (v.x * 0.5 + 0.5) * innerWidth, y = (-v.y * 0.5 + 0.5) * innerHeight; el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`; });
+}
+const state = { phase: 'intro', goal: null, cups: 5, events: [], task: null };
+const briefs = {
+  launch: { title: 'أطلق مشروعًا', text: 'اكتب صفحة هبوط لمشروعي، وعرّف بالمنتج، واذكر 3 فوائد، وادعُ الزائر للتواصل.', agents: ['muhallil', 'musawwiq', 'mursal'] },
+  content: { title: 'اكتب محتوى', text: 'اكتب مقالة تعريفية عن منتجي، بأسلوب دافئ وواضح، بلا مبالغة، واذكر 3 حالات استخدام.', agents: ['musawwiq', 'muraji'] },
+  market: { title: 'حلّل سوقًا', text: 'حلّل السوق المستهدف لمنتجي، واذكر 3 منافسين وفرصة تميّز واحدة، بدعم كل رقم بمصدر.', agents: ['muhallil', 'muraji'] }
+};
+function logEvent(actor, action, reason) {
+  state.events.push({ time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }), actor, action, reason: reason || '' }); renderLog(); bookPulse();
+}
+function renderLog() {
+  const list = document.getElementById('log-list');
+  list.innerHTML = state.events.slice().reverse().map(e => `<div class="log-entry"><div class="meta"><span class="actor">${e.actor}</span><span>${e.time}</span></div><div class="action">${e.action}</div>${e.reason ? `<div class="reason">${e.reason}</div>` : ''}</div>`).join('');
+}
+function toggleLog() { const p = document.getElementById('log-panel'); p.classList.toggle('visible'); if (p.classList.contains('visible')) renderLog(); }
+document.getElementById('log-btn').onclick = toggleLog;
+function bookPulse() { book.userData.glow = 1; }
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('visible'); clearTimeout(t._timer); t._timer = setTimeout(() => t.classList.remove('visible'), 2200); }
+function showTaskCard(key) {
+  if (!state.task) return; const t = state.task, card = document.getElementById('task-card');
+  document.getElementById('tc-title').textContent = `مهمة: ${agentNames[key] || key}`; document.getElementById('tc-brief').textContent = t.brief || '—'; document.getElementById('tc-cycle').textContent = `${t.cycle || 1} / 3`; document.getElementById('tc-note').textContent = t.lastNote || 'لا ملاحظات'; document.getElementById('tc-state').textContent = t.stateLabel || 'قيد العمل'; card.classList.add('visible'); clearTimeout(card._hide); card._hide = setTimeout(() => card.classList.remove('visible'), 4000);
+}
+function showDialog(speaker, text, buttons) {
+  document.getElementById('dialog-speaker').textContent = speaker; document.getElementById('dialog-text').textContent = text;
+  const actions = document.getElementById('dialog-actions'); actions.innerHTML = '';
+  buttons.forEach(b => { const btn = document.createElement('button'); btn.textContent = b.label; if (b.primary) btn.className = 'primary'; btn.onclick = () => { hideDialog(); b.action(); }; actions.appendChild(btn); });
+  document.getElementById('dialog').classList.add('visible');
+}
+function hideDialog() { document.getElementById('dialog').classList.remove('visible'); }
+const tweens = [];
+function tween(obj, to, dur, ease = 'easeOut', onDone) {
+  const from = {}; for (const k in to) from[k] = obj[k];
+  tweens.push({ t: 0, dur, step(dt) { this.t = Math.min(1, this.t + dt / this.dur); let p = this.t; if (ease === 'easeOut') p = 1 - Math.pow(1 - p, 3); if (ease === 'easeInOut') p = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; for (const k in to) obj[k] = from[k] + (to[k] - from[k]) * p; if (this.t >= 1) { onDone && onDone(); return true; } return false; } });
+}
+const envelopeMat = new THREE.MeshStandardMaterial({ color: 0xFFD9A0, emissive: 0xFFD9A0, emissiveIntensity: 0.4, flatShading: true }), envelopeGeo = new THREE.BoxGeometry(0.28, 0.02, 0.2);
+function flyEnvelope(fromKey, toKey, onArrive) {
+  const env = new THREE.Mesh(envelopeGeo, envelopeMat), from = agents[fromKey].pos, to = agents[toKey].pos, y0 = 1.2, yPeak = 2.2; let t = 0; const dur = 1.1; scene.add(env);
+  const anim = { update(dt) { t += dt / dur; if (t >= 1) { scene.remove(env); onArrive && onArrive(); return true; } const p = t, x = from.x + (to.x - from.x) * p, z = from.z + (to.z - from.z) * p, y = y0 + Math.sin(p * Math.PI) * (yPeak - y0); env.position.set(x, y, z); env.rotation.x = Math.sin(t * 8) * 0.3; env.rotation.y = t * 4; return false; } };
+  tweens.push({ custom: anim });
+}
+function stampAt(key) {
+  const a = agents[key], stamp = new THREE.Mesh(new THREE.RingGeometry(0.1, 0.3, 16), new THREE.MeshStandardMaterial({ color: 0xC9A24B, emissive: 0xC9A24B, emissiveIntensity: 1.5, transparent: true, opacity: 1, side: THREE.DoubleSide }));
+  stamp.position.set(a.pos.x, 1.3, a.pos.z); stamp.rotation.x = -Math.PI / 2; scene.add(stamp); let t = 0;
+  tweens.push({ custom: { update(dt) { t += dt / 0.6; if (t >= 1) { scene.remove(stamp); return true; } stamp.scale.setScalar(1 + t * 1.5); stamp.material.opacity = 1 - t; stamp.material.emissiveIntensity = 1.5 * (1 - t); return false; } } });
+}
+function qahwajiApproach(onArrive) {
+  const target = { x: 0, z: -2.6 }, q = agents.qahwaji; tween(q.pos, target, 1.4, 'easeInOut', () => { q.group.position.set(target.x, 0, target.z); q.group.rotation.y = 0; if (q.qDalleh) q.qDalleh.position.set(target.x + 0.25, 0.4, target.z + 0.15); onArrive && onArrive(); });
+  const start = { ...q.pos }; let t = 0;
+  tweens.push({ custom: { update(dt) { t += dt / 1.4; if (t >= 1) return true; const p = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; q.pos.x = start.x + (target.x - start.x) * p; q.pos.z = start.z + (target.z - start.z) * p; q.group.position.set(q.pos.x, 0, q.pos.z); if (q.qDalleh) q.qDalleh.position.set(q.pos.x + 0.25, 0.4, q.pos.z + 0.15); return false; } } });
+}
+function qahwajiReturn() {
+  const target = { x: 0.9, z: 0.3 }, start = { ...agents.qahwaji.pos }; let t = 0;
+  tweens.push({ custom: { update(dt) { t += dt / 1.2; if (t >= 1) { agents.qahwaji.pos.x = target.x; agents.qahwaji.pos.z = target.z; return true; } const p = 1 - Math.pow(1 - t, 3), x = start.x + (target.x - start.x) * p, z = start.z + (target.z - start.z) * p; agents.qahwaji.pos.x = x; agents.qahwaji.pos.z = z; agents.qahwaji.group.position.set(x, 0, z); if (agents.qahwaji.qDalleh) agents.qahwaji.qDalleh.position.set(x + 0.25, 0.4, z + 0.15); return false; } } });
+}
+function setThinking(key, on) { const c = agents[key]?.cloud; if (c) c.visible = on; }
+function enterMajlis() {
+  document.getElementById('entry').classList.add('fade-out'); state.phase = 'greet'; document.getElementById('topbar').classList.add('visible'); logEvent('المضيف', 'دخل المجلس', '');
+  setTimeout(() => showDialog('القهوجي', 'حياك الله. المجلس لك، لكنه فاضي. وش تبي نسوي اليوم؟', [{ label: 'أطلق مشروعًا', action: () => pickGoal('launch') }, { label: 'اكتب محتوى', action: () => pickGoal('content') }, { label: 'حلّل سوقًا', action: () => pickGoal('market') }]), 900);
+}
+function pickGoal(goal) {
+  state.goal = goal; const b = briefs[goal]; logEvent('مدير المكتب', 'وزّع المهام', `الهدف: ${b.title}`);
+  b.agents.forEach((key, i) => {
+    const a = agents[key]; a.group.scale.set(0.01, 0.01, 0.01);
+    setTimeout(() => { let t = 0; tweens.push({ custom: { update(dt) { t += dt / 0.5; if (t >= 1) { a.group.scale.set(1, 1, 1); return true; } const p = 1 - Math.pow(1 - t, 3); a.group.scale.setScalar(Math.max(0.01, p)); return false; } } }); }, i * 200);
+    setTimeout(() => setThinking(key, true), i * 200 + 300);
+  });
+  ['mudir', 'mushrif', 'muraji'].forEach(k => { if (!agents[k].group.visible) agents[k].group.visible = true; });
+  Object.keys(labelEls).forEach(k => labelEls[k].classList.add('visible')); b.agents.forEach(k => labelEls[k].classList.add('working'));
+  state.task = { brief: b.text, cycle: 1, stateLabel: 'قيد العمل', lastNote: null };
+  setTimeout(() => showDialog('مدير المكتب', `تمام. هذولا الفريق. المهمة: "${b.text}". نبدأ؟`, [{ label: 'ابدأ', primary: true, action: startWork }]), 600);
+}
+function startWork() {
+  state.phase = 'working'; logEvent('مدير المكتب', 'بدأ العمل', '');
+  const active = briefs[state.goal].agents; let doneCount = 0;
+  active.forEach((key, i) => setTimeout(() => { setThinking(key, false); flyEnvelope(key, 'mushrif', () => { logEvent(agentNames[key], 'سلّم مخرجًا', ''); doneCount++; if (doneCount === active.length) setTimeout(startReview, 400); }); }, 1400 + i * 900));
+}
+function startReview() {
+  state.phase = 'reviewing'; setThinking('mushrif', true); logEvent('المشرف العام', 'بدأ المراجعة', '');
+  setTimeout(() => {
+    setThinking('mushrif', false); stampAt('mushrif'); logEvent('المشرف العام', 'اعتمد المخرج', ''); state.task.stateLabel = 'تمت المراجعة';
+    setTimeout(() => { setThinking('muraji', true); setTimeout(() => { setThinking('muraji', false); logEvent('مراجع الجودة', 'دقّق المخرج', 'لا ملاحظات حرجة'); setTimeout(startGate, 400); }, 1200); }, 500);
+  }, 1400);
+}
+function startGate() {
+  state.phase = 'gate'; logEvent('بوابة الموافقة', 'أوقفت الإجراء', 'ينتظر إشارة المضيف');
+  qahwajiApproach(() => { const items = document.getElementById('approval-items'); items.innerHTML = '<div class="item"><span class="label">صفحة هبوط</span> — جاهزة للنشر</div><div class="item"><span class="label">سلسلة بريد</span> — 3 رسائل، جاهزة للإرسال</div>'; document.getElementById('approval').classList.add('visible'); });
+}
+function approveAction() {
+  document.getElementById('approval').classList.remove('visible'); logEvent('المضيف', 'وافق على التنفيذ', ''); state.phase = 'done';
+  const flash = new THREE.PointLight(0xFFD9A0, 8, 6, 2); flash.position.set(0, 1, -1.5); scene.add(flash); let t = 0;
+  tweens.push({ custom: { update(dt) { t += dt / 1.2; if (t >= 1) { scene.remove(flash); return true; } flash.intensity = 8 * (1 - t); return false; } } });
+  ['musawwiq', 'mursal', 'muhallil'].forEach(k => {
+    if (briefs[state.goal].agents.includes(k)) {
+      const check = document.createElement('div'); check.textContent = '✓'; check.style.cssText = 'position:absolute;font-size:28px;color:#7ec97e;pointer-events:none;z-index:20;transition:opacity 1.5s;';
+      labelsLayer.appendChild(check); const a = agents[k], v = new THREE.Vector3(a.pos.x, 1.9, a.pos.z); v.project(camera); check.style.left = `${(v.x * 0.5 + 0.5) * innerWidth}px`; check.style.top = `${(-v.y * 0.5 + 0.5) * innerHeight}px`; check.style.transform = 'translate(-50%, -50%)';
+      setTimeout(() => { check.style.opacity = '0'; }, 2000); setTimeout(() => check.remove(), 3600);
+    }
+  });
+  bookPulse();
+  setTimeout(() => showDialog('القهوجي', 'صحتين وعافية. كل شيء صار. سجل القرار محفوظ، ارجع له متى شئت.', [{ label: 'شكرًا', primary: true, action: () => { qahwajiReturn(); toast('اضغط "سجل القرار" لرؤية كل ما جرى'); } }]), 1000);
+}
+function holdAction() { document.getElementById('approval').classList.remove('visible'); logEvent('المضيف', 'أجّل القرار', ''); toast('محفوظ. القهوجي ينتظر متى شئت'); setTimeout(() => document.getElementById('approval').classList.add('visible'), 5000); }
+function showPreview() { toast('المعاينة الكاملة متاحة في الخطة المدفوعة'); }
+let lastTime = performance.now(), clockT = 0;
+function animate(now) {
+  requestAnimationFrame(animate); const dt = Math.min(0.05, (now - lastTime) / 1000); lastTime = now; clockT += dt;
+  fanoosGroup.rotation.y += dt * 0.2; fanoosGroup.position.y = 4.6 + Math.sin(clockT * 0.8) * 0.05;
+  Object.keys(agents).forEach(k => { const c = agents[k].cloud; if (c && c.visible) { c.position.y = (agents[k].cfg.seated === false ? 2.1 : 1.7) + Math.sin(clockT * 2 + k.length) * 0.08; c.children.forEach((d, i) => { d.position.y = Math.sin(clockT * 2.5 + i * 0.7) * 0.04; }); } });
+  if (book.userData.glow > 0) { book.userData.glow = Math.max(0, book.userData.glow - dt * 0.4); pages.material.emissive.setHex(0xC9A24B); pages.material.emissiveIntensity = book.userData.glow * 0.8; } else pages.material.emissiveIntensity = 0;
+  for (let i = tweens.length - 1; i >= 0; i--) { const tw = tweens[i], finished = tw.custom ? tw.custom.update(dt) : tw.step(dt); if (finished) tweens.splice(i, 1); }
+  const drift = Math.sin(clockT * 0.15) * 0.3; camera.position.x = drift; camera.lookAt(0, 0.5, -1); updateLabels(); renderer.render(scene, camera);
+}
+requestAnimationFrame(animate);
+addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+Object.values(labelEls).forEach(el => el.classList.remove('visible'));
+window.enterMajlis = enterMajlis; window.toggleLog = toggleLog; window.approveAction = approveAction; window.holdAction = holdAction; window.showPreview = showPreview;
+</script>
+</body>
+</html>
